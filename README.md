@@ -36,7 +36,7 @@ Key Features and Functionalities:
 
 ## Schema
 
-![schema](images/Expense_Tracker_Schema.jpg)
+![schema](images/Expense_Tracker.jpg)
 
 ## Wire Frame
 
