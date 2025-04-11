@@ -34,7 +34,26 @@ Key Features and Functionalities:
 - updateApprovedStatus(expenseId) - ADMIN: alters approved status for an expense
 - deleteExpense(expenseId) - ADMIN: removes an expense from the database
 
-User Scenarios:
+## Schema
+
+![schema](images/Expense_Tracker_Schema.jpg)
+
+## Wire Frame
+
+### User Login page
+
+<img src="images/login.png" alt="login" width="400"/>
+
+### Home page
+<img src="images/home.png" alt="login" width="400"/>
+
+### Add/Edit form page
+<img src="images/form.png" alt="login" width="400"/>
+
+### admin dashboard
+<img src="images/admin-dash.png" alt="login" width="400"/>
+
+## User Scenarios:
 
 Scenario 1: Peter, an employee of Bob's Construction Co., use the expense tracker to keep track of the amount spent on labor, materials, and equipment.
 Scenario 2: Bob, the owner of Bob's Construction Co., logs onto his account to review Peter's pending expenses and can decide whether to add/update/delete that exact expense.
@@ -123,6 +142,129 @@ Research and Resources: TypeScript Documentation, Exercism TypeScript Course
 Challenges: One challenge is that we have prior experience in using TypeScript. To address this issue we will be leaning towards reading documentations and watching videos on TypeScript, and use the TypeScript course to help understand.
 Success Criteria: The front-end should be able to successfully display the necessary data and UI components of the Expense Tracker application.
 
+## Class Diagram
+
+```
+ src
+├───main
+│   └───java
+│       └───learn
+│           └───finance
+│               ├───App.java
+│               │
+│               ├───controller
+│               │       UserController.java
+│               │       ExpenseController.java
+│               │       LoginController.java
+│               │
+│               ├───model
+│               │       User.java
+│               │       Expense.java
+│               │       Category.java         <-- enum
+│               │       Login.java
+│               │
+│               ├───repository
+│               │       UserRepository.java
+│               │       ExpenseRepository.java
+│               │       LoginRepository.java
+│               │
+│               ├───service
+│               │       UserService.java
+│               │       ExpenseService.java
+│               │       LoginService.java
+│               │
+│               └───exception
+│                       DataException.java
+│
+└───test
+└───java
+└───learn
+└───finance
+├───service
+│       UserServiceTest.java
+│       ExpenseServiceTest.java
+│       LoginServiceTest.java
+│
+├───repository
+│       UserRepositoryTestDouble.java
+│       ExpenseRepositoryTestDouble.java
+│       LoginRepositoryTestDouble.java
+│
+│       UserRepositoryTest.java
+│       ExpenseRepositoryTest.java
+│       LoginRepositoryTest.java
+
+```
+
+## Class Overview
+
+```
+Controller Layer: Handles HTTP requests and responses (e.g., user and expense operations).
+Model Layer: Contains the data structure and business logic (e.g., User, Expense, Login, Category).
+Repository Layer: Interacts with the database, handles CRUD operations (e.g., UserJdbcRepository, ExpenseJdbcRepository).
+Service Layer: Contains the business logic and validates the business rules (e.g., UserService, ExpenseService).
+Exception Layer: Handles custom exceptions (e.g., DataException).
+
+1.     Controller Layer (UserController, ExpenseController, LoginController)
+- Responsibilities:
+  - Receive Requests: The controllers handle HTTP requests (e.g., POST, GET, PUT, DELETE).
+  - Call Services: The controllers delegate business logic to the Service classes.
+  - Return Responses: The controllers send the response back to the frontend.
+- Dependencies:
+  - Depends on UserService, ExpenseService, and LoginService: The controllers call the services to handle the core business logic.
+  - Sends Data to the Frontend: Once the services process data (e.g., creating an expense, fetching a user), the controller returns the result to the client.
+    Examples:
+-   UserController calls UserService to handle user-related operations.
+-   ExpenseController calls ExpenseService to manage expenses.
+-   LoginController calls LoginService to validate logins.
+
+2.     Service Layer (UserService, ExpenseService, LoginService)
+- Responsibilities:
+  - Business Logic: The service classes implement business rules (e.g., validate user data, calculate expense totals).
+  - Call Repositories: Service classes interact with repositories to fetch/save data from/to the database.
+- Dependencies:
+  - Depends on Repository Layer: Each service depends on its respective repository (e.g., UserRepository, ExpenseRepository, LoginRepository) to interact with the database.
+  - Delegates to Controller Layer: The services provide the logic required by the controllers. They don’t handle direct HTTP requests themselves; the controllers do.
+    Example:
+-   UserService uses UserRepository to save or fetch users.
+-   ExpenseService uses ExpenseRepository to perform operations like saving expenses or fetching expenses for a user.
+-   LoginService uses LoginRepository to authenticate users.
+
+3.     Repository Layer (UserRepository, ExpenseRepository, LoginRepository, UserJdbcRepository, ExpenseJdbcRepository, LoginJdbcRepository)
+- Responsibilities:
+  - Data Access: The repositories manage data persistence by interacting directly with the database.
+  - CRUD Operations: The repositories handle basic CRUD operations (create, read, update, delete) and custom queries.
+  - Data Mapping: The JdbcRepository classes map database results to Java objects (e.g., mapping SQL result set rows to User, Expense, etc.).
+- Dependencies:
+  - Depends on JdbcTemplate: JdbcRepository implementations use JdbcTemplate to execute SQL queries and map results to model objects.
+  - Implements Repository Interfaces: The JdbcRepository classes implement their respective interfaces (UserRepository, ExpenseRepository, LoginRepository), ensuring that they follow the contract and provide required methods.
+    Example:
+-   UserJdbcRepository implements UserRepository and provides methods like findById and findByEmail using JdbcTemplate.
+-   ExpenseJdbcRepository implements ExpenseRepository to handle expense data operations.
+-   LoginJdbcRepository implements LoginRepository to authenticate users based on their login credentials.
+
+4.     Model Layer (User, Expense, Login, Category)
+- Responsibilities:
+  - Data Representation: These classes represent the data structure and properties of the entities.
+  - Business Logic: Some models, such as Expense, may contain domain-specific logic (e.g., category validation).
+  - Data Mapping: These models are mapped to database tables (e.g., User → users table, Expense → expenses table).
+- Dependencies:
+  - Models are used by Service Layer: The models are passed between the service and repository layers. For example, User objects are used by UserService to manage user operations.
+  - Models are mapped in Repository Layer: The repository classes return models (e.g., User, Expense) as results after querying the database.
+    Example:
+-   User model represents the user data (id, email, name) and is returned from the repository after querying the database.
+-   Expense model contains fields like amount, category, and userId and is used to create or fetch expense data.
+-   Category is an enum used in the Expense model to classify expenses.
+
+5.     Exception Layer (DataException)
+- Responsibilities:
+  - Custom Error Handling: The DataException class is used to handle specific exceptions related to data access, such as invalid data, database errors, or failed queries.
+  - Consistent Error Messages: It provides a standard way to throw and catch exceptions in the service and repository layers.
+- Dependencies:
+  - Thrown by Repository and Service Layer: If there’s an issue in the repository or service layers (e.g., when a database error occurs), a DataException is thrown and propagated to the controller layer, which can return an appropriate HTTP status.
+    Example:
+-   DataException is thrown when a query fails or an invalid operation is attempted (e.g., trying to insert an invalid expense category).
+```
 ## Class List
 
 - User (Model): Represents a user and holds related data
