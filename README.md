@@ -145,54 +145,65 @@ Success Criteria: The front-end should be able to successfully display the neces
 ## Class Diagram
 
 ```
- src
-├───main
-│   └───java
-│       └───learn
-│           └───finance
-│               ├───App.java
-│               │
-│               ├───controller
-│               │       UserController.java
-│               │       ExpenseController.java
-│               │       LoginController.java
-│               │
-│               ├───model
-│               │       User.java
-│               │       Expense.java
-│               │       Category.java         <-- enum
-│               │       Login.java
-│               │
-│               ├───repository
-│               │       UserRepository.java
-│               │       ExpenseRepository.java
-│               │       LoginRepository.java
-│               │
-│               ├───service
-│               │       UserService.java
-│               │       ExpenseService.java
-│               │       LoginService.java
-│               │
-│               └───exception
-│                       DataException.java
+src
+├── main
+│   └── java
+│       └── learn
+│           └── finance
+│               ├── App.java
 │
-└───test
-└───java
-└───learn
-└───finance
-├───service
-│       UserServiceTest.java
-│       ExpenseServiceTest.java
-│       LoginServiceTest.java
+│               ├── controller
+│               │   ├── UserController.java
+│               │   ├── ExpenseController.java
+│               │   └── LoginController.java
 │
-├───repository
-│       UserRepositoryTestDouble.java
-│       ExpenseRepositoryTestDouble.java
-│       LoginRepositoryTestDouble.java
+│               ├── model
+│               │   ├── User.java
+│               │   ├── Expense.java          // includes: boolean approved
+│               │   ├── Category.java         // enum
+│               │   └── Login.java
 │
-│       UserRepositoryTest.java
-│       ExpenseRepositoryTest.java
-│       LoginRepositoryTest.java
+│               ├── repository
+│               │   ├── UserRepository.java
+│               │   ├── ExpenseRepository.java
+│               │   ├── LoginRepository.java
+│               │   ├── UserJdbcRepository.java       // NEW
+│               │   ├── ExpenseJdbcRepository.java    // NEW
+│               │   └── LoginJdbcRepository.java      // NEW
+│
+│               ├── service
+│               │   ├── UserService.java
+│               │   ├── ExpenseService.java
+│               │   └── LoginService.java
+│
+│               ├── security                          // NEW PACKAGE
+│               │   ├── JwtConverter.java
+│               │   ├── JwtRequestFilter.java
+│               │   └── SecurityConfig.java
+│
+│               ├── config                            // OPTIONAL (or merged with security)
+│               │   └── DatabaseConfig.java
+│
+│               └── exception
+│                   ├── DataException.java
+│                   └── ErrorResponse.java            // NEW
+│
+└── test
+    └── java
+        └── learn
+            └── finance
+                ├── service
+                │   ├── UserServiceTest.java
+                │   ├── ExpenseServiceTest.java
+                │   └── LoginServiceTest.java
+                │
+                └── repository
+                    ├── UserRepositoryTestDouble.java
+                    ├── ExpenseRepositoryTestDouble.java
+                    ├── LoginRepositoryTestDouble.java
+                    ├── UserRepositoryTest.java
+                    ├── ExpenseRepositoryTest.java
+                    └── LoginRepositoryTest.java
 
 ```
 
@@ -374,6 +385,8 @@ Exception Layer: Handles custom exceptions (e.g., DataException).
   - ResponseEntity<Object> build(Result<T> result)
 
 ## Task List With Estimated Times [45.5 hrs]
+
+## DAY 1 (MONDAY)
 * [ ] Project Setup [15 minutes] (***developer 2***)
   * [ ] Initialize Spring Boot Project with required dependencies: ~5 minutes
   * [ ] Setup project structure: ~5 minutes
@@ -399,6 +412,8 @@ Exception Layer: Handles custom exceptions (e.g., DataException).
   * [ ] Implement LoginJdbcRepository: 1hr (***developer 3***)
   * [ ] Testing: 2.5 hrs (***All Developers***)
 
+## DAY 2 (TUESDAY)
+
 * [ ] Service Layer [6.5 hrs]
   * [ ] Create UserService : 1.5 hr (***developer 3***)
   * [ ] Create ExpenseService : 1.5 hr (***developer 1***)
@@ -413,10 +428,15 @@ Exception Layer: Handles custom exceptions (e.g., DataException).
 
 * [ ] Setup App.java [1.5 hrs]
   * [ ] SpringBoot Annotations : 1.5hrs (***developer 1***)
+
+## DAY 3 (WEDNESDAY)
 * [ ] Create Typescript React App [16 hrs] (***All Developers***)
   * [ ] Research Typescript 4hrs (***All Developers***)
   * [ ] Create react security 4hrs (***All Developers***)
   * [ ] Create components for Expense, User, Home, Error page, Landing page, Forms 4 hrs (***All Developers***)
   * [ ] CSS/Bootstrap 4hrs (***All Developers***)
 * [ ] Reading Documentation [~4 hrs] (***All Developers***)
+
+# DAY 4 (THURSDAY)
 * [ ] TroubleShooting/Debugging [~5 hrs] (***All Developers***)
+* [ ] Stretch Goals (***All Developers***)
