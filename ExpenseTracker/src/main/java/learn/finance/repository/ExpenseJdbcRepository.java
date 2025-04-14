@@ -77,7 +77,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 "created_at = ?, " +
                 "updated_at = ?, " +
                 "approved = ?, " +
-                "reimbursed = ?," +
+                "reimbursed = ?, " +
                 "receipt_url = ? " +
                 "where expense_id = ?";
 
