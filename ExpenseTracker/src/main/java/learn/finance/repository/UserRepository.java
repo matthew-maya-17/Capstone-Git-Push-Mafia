@@ -8,5 +8,5 @@ public interface UserRepository {
     List<User> findAll();
     User addUser(User user);
     boolean deleteUser(int userId);
-    boolean updateUser(int userId);
+    boolean updateUser(User user);
 }
