@@ -40,7 +40,13 @@ created_at datetime not null,
 updated_at datetime null,
 approved bit not null,
 reimbursed bit not null,
-receipt_url VARCHAR(2048) not null
+receipt_url VARCHAR(2048) not null,
+constraint fk_expense_user
+	foreign key (user_id)
+    references `user`(user_id),
+constraint fk_category_expense
+	foreign key (category_id)
+    references category(category_id)
 );
 
 -- insert data
