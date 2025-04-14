@@ -24,6 +24,7 @@ user_id int not null,
 user_name varchar(50) not null,
 password varchar(72) not null,
 is_admin bit not null,
+disabled bit not null,
 constraint fk_login_user
 	foreign key (user_id)
     references `user`(user_id)
