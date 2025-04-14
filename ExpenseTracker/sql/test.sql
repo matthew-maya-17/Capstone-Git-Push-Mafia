@@ -64,6 +64,23 @@ values
 (2,2, 3, 70.50, 'Compensation for Gas', '2025-10-17 04:30:49', 1, 0, 'http://www.example.com/#actor'),
 (3, 3, 2, 200.30, 'Compensation for Drywall Purchase','2025-02-28 02:15:49', 1, 1, 'https://www.example.net/?acoustics=alarm&belief=army');
 
-select * from category;
-select * from user;
-select * from expense;
+-- set known good state for tests
+delimiter //
+
+create procedure set_known_good_state()
+begin
+delete from category;
+delete from expense;
+insert into `user`(user_id, first_name, last_name)
+values
+(1, 'Kyle', 'Box'),
+(2, 'Matthew', 'Maya'),
+(3, 'Joey ', 'Tsui');
+
+insert into expense (expense_id,user_id, category_id, amount, `description`, created_at, approved, reimbursed, receipt_url)
+values
+(1,1, 1, 150.79, 'Pay for this week','2025-04-06 06:03:49', 0, 0, 'https://www.example.org/'),
+(2,2, 3, 70.50, 'Compensation for Gas', '2025-10-17 04:30:49', 1, 0, 'http://www.example.com/#actor'),
+(3, 3, 2, 200.30, 'Compensation for Drywall Purchase','2025-02-28 02:15:49', 1, 1, 'https://www.example.net/?acoustics=alarm&belief=army');
+
+end //
