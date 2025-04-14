@@ -1,4 +1,21 @@
 package learn.finance.repository.mappers;
 
-public class LoginMapper {
+import learn.finance.model.Login;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class LoginMapper implements RowMapper<Login> {
+
+    @Override
+    public Login mapRow(ResultSet resultSet, int i) throws SQLException {
+        Login login = new Login();
+        login.setLoginId(resultSet.getInt("login_id"));
+        login.setUserId(resultSet.getInt("user_id"));
+        login.setUsername(resultSet.getString("username"));
+        login.setPassword(resultSet.getString("password"));
+        login.setAdmin(resultSet.getString("is_admin"))
+        return login;
+    }
 }
