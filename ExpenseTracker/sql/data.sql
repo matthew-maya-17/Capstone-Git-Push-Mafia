@@ -1,8 +1,8 @@
-drop database if exists expense_tracker;
+drop database if exists expense_tracker_test;
 create database expense_tracker;
-use expense_tracker;
+use expense_tracker_test;
 
--- create tabels and relationships
+-- create tables and relationships
 
 -- category
 create table category (
@@ -35,12 +35,12 @@ expense_id int primary key auto_increment,
 user_id int not null,
 category_id int not null,
 amount decimal(8,2) not null,
-`description` VARCHAR(100) null,
+description VARCHAR(100) null,
 created_at datetime not null,
-updated_at datetime null,
+updated_at datetime not null,
 approved bit not null,
 reimbursed bit not null,
-receipt_url VARCHAR(2048) not null
+receipt_url VARCHAR(2048)
 );
 
 -- insert data
@@ -67,10 +67,6 @@ values
 select * from category;
 select * from user;
 select * from expense;
-    
-    
-
-
 
 
 
