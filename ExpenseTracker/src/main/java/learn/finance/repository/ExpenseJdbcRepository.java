@@ -6,6 +6,7 @@ import learn.finance.repository.mappers.ExpenseMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public class ExpenseJdbcRepository implements ExpenseRepository {
     private final JdbcTemplate jdbcTemplate;
 
@@ -30,13 +32,13 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     @Override
     public List<Expense> findByDateRange(Date startDate, Date endDdate) {
         final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
-                "where create_at between ? and ? ;";
+                " where created_at between ? and ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDdate);
     }
 
     @Override
     public List<Expense> findByCategory(Category category) {
-        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
+        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense " +
                 "where category_id = ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId());
     }
