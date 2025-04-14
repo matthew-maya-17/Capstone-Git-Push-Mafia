@@ -31,6 +31,34 @@ KnownGoodState knownGoodState;
         assertEquals(3, users.size());
     }
 
+    @Test
+    void shouldAddUser() {
+        User user = new User();
+        user.setFirstName("Billy");
+        user.setLastName("Bob");
+       User addedUser = repository.addUser(user);
+        assertNotNull(addedUser);
+        assertEquals("Billy", addedUser.getFirstName());
+    }
+
+    @Test
+    void shouldUpdateUser() {
+        List<User> users = repository.findAll();
+        User user = users.get(0);
+        user.setLastName("lastName");
+        assertTrue(repository.updateUser(user));
+
+    }
+
+    @Test
+    void shouldDelete() {
+        User user = new User();
+        user.setFirstName("Billy");
+        user.setLastName("Bob");
+        User addedUser = repository.addUser(user);
+        assertTrue(repository.deleteUser(addedUser.getUserId()));
+    }
+
 
 
 }
