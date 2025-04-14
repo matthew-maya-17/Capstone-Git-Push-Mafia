@@ -19,7 +19,7 @@ public class ExpenseMapper implements RowMapper<Expense> {
         if (resultSet.getDate("created_at") != null) {
             expense.setCreatedAt(resultSet.getTimeStamp("created_at").toLocalDateTime());
         }
-        if (resultSet.getDate("created_at") != null) {
+        if (resultSet.getDate("updated_at") != null) {
             expense.setUpdatedAt(resultSet.getTimeStamp("updated_at").toLocalDateTime());
         }
         expense.setApproved(resultSet.getBoolean("approved"));

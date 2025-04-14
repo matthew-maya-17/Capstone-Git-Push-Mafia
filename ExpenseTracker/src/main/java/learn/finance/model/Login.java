@@ -3,7 +3,7 @@ package learn.finance.model;
 public class Login {
     private int loginId;
     private int userId;
-    private String username;
+    private String userName;
     private String password;
     private boolean isAdmin;
 
