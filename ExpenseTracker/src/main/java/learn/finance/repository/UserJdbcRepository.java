@@ -1,6 +1,7 @@
 package learn.finance.repository;
 
 import learn.finance.model.User;
+import learn.finance.repository.mappers.UserMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -29,8 +30,8 @@ public class UserJdbcRepository implements UserRepository{
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getFirstName);
-            ps.setString(2, user.getLastName);
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
             return ps;
         }, keyHolder);
 
@@ -57,6 +58,6 @@ public class UserJdbcRepository implements UserRepository{
         return jdbcTemplate.update(sql,
                 user.getFirstName(),
                 user.getLastName(),
-                user.getUserId() > 0);
+                user.getUserId()) > 0;
     }
 }
