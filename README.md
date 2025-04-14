@@ -387,28 +387,28 @@ Exception Layer: Handles custom exceptions (e.g., DataException).
 ## Task List With Estimated Times [45.5 hrs]
 
 ## DAY 1 (MONDAY)
-* [ ] Project Setup [15 minutes] (***developer 2***)
-  * [ ] Initialize Spring Boot Project with required dependencies: ~5 minutes
-  * [ ] Setup project structure: ~5 minutes
-  * [ ] Configure application Properties: ~5 minutes
+* [X] Project Setup [15 minutes] (***developer 2***)
+  * [X] Initialize Spring Boot Project with required dependencies: ~5 minutes
+  * [X] Setup project structure: ~5 minutes
+  * [X] Configure application Properties: ~5 minutes
 
-* [ ] Database [50 minutes] (***developer 2***)
-  * [ ] Create database (based on schema) : 5 minutes
-  * [ ] Populate database with production data : 10 minutes
-  * [ ] Create test database: 5 minutes
-  * [ ] Populate test database with test data : 10 minutes
-  * [ ] Make sure databases are populated correctly (test queries): 10 minutes
+* [X] Database [50 minutes] (***developer 2***)
+  * [X] Create database (based on schema) : 5 minutes
+  * [X] Populate database with production data : 10 minutes
+  * [X] Create test database: 5 minutes
+  * [X] Populate test database with test data : 10 minutes
+  * [X] Make sure databases are populated correctly (test queries): 10 minutes
 
-* [ ] Model Layer [1 hr] (***developer 1***)
-  * [ ] Create User Class/ User Mapper : 15 min
-  * [ ] Create Expense Class/ Expense Mapper: 15 min
-  * [ ] Create Login Class/ Login Mapper: 15 mins
-  * [ ] Create Category Enum: 15 mins
+* [X] Model Layer [1 hr] (***developer 1***)
+  * [X] Create User Class/ User Mapper : 15 min
+  * [X] Create Expense Class/ Expense Mapper: 15 min
+  * [X] Create Login Class/ Login Mapper: 15 mins
+  * [X] Create Category Enum: 15 mins
 
 * [ ] Repository Layer [6 hours] (***All Developers***)
-  * [ ] Define interfaces: UserRepository, ExpenseRepository, LoginRepository: 0.5hr (***developer 3***)
-  * [ ] Implement UserJdbcRepository: 1hr (***developer 1***)
-  * [ ] Implement ExpenseJdbcRepository: 1hr (***developer 2***)
+  * [X] Define interfaces: UserRepository, ExpenseRepository, LoginRepository: 0.5hr (***developer 3***)
+  * [X] Implement UserJdbcRepository: 1hr (***developer 1***)
+  * [X] Implement ExpenseJdbcRepository: 1hr (***developer 2***)
   * [ ] Implement LoginJdbcRepository: 1hr (***developer 3***)
   * [ ] Testing: 2.5 hrs (***All Developers***)
 
