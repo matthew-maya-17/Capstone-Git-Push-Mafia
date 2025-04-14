@@ -13,7 +13,7 @@ public class LoginMapper implements RowMapper<Login> {
         Login login = new Login();
         login.setLoginId(resultSet.getInt("login_id"));
         login.setUserId(resultSet.getInt("user_id"));
-        login.setUsername(resultSet.getString("username"));
+        login.setUsername(resultSet.getString("user_name"));
         login.setPassword(resultSet.getString("password"));
         login.setAdmin(resultSet.getBoolean("is_admin"));
         return login;
