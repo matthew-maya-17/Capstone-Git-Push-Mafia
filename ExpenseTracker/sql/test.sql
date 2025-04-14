@@ -40,7 +40,13 @@ created_at datetime not null,
 updated_at datetime null,
 approved bit not null,
 reimbursed bit not null,
-receipt_url VARCHAR(2048)
+receipt_url VARCHAR(2048),
+constraint fk_expense_user
+	foreign key (user_id)
+    references `user`(user_id),
+constraint fk_category_expense
+	foreign key (category_id)
+    references category(category_id)
 );
 
 -- insert data
@@ -69,8 +75,8 @@ delimiter //
 
 create procedure set_known_good_state()
 begin
-delete from category;
 delete from expense;
+delete from user;
 insert into `user`(user_id, first_name, last_name)
 values
 (1, 'Kyle', 'Box'),
@@ -84,3 +90,4 @@ values
 (3, 3, 2, 200.30, 'Compensation for Drywall Purchase','2025-02-28 02:15:49', 1, 1, 'https://www.example.net/?acoustics=alarm&belief=army');
 
 end //
+delimiter ;
