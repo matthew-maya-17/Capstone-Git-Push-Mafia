@@ -1,5 +1,7 @@
 package learn.finance.model;
 
+import java.time.LocalDateTime;
+
 public class Expense {
     private int expenseId;
     private int userId;
@@ -10,7 +12,7 @@ public class Expense {
     private LocalDateTime updatedAt;
     private boolean approved = false;
     private boolean reimbursed = false;
-    private String receiptUrl
+    private String receiptUrl;
 
     public int getExpenseId() {
         return expenseId;

@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     public List<Expense> findByCategory(Category category) {
         final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
                 "where category_id = ? ;";
-        return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId);
+        return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId());
     }
 
     @Override
@@ -48,10 +50,10 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, expense.getUserId());
             ps.setInt(2, expense.getCategoryId());
-            ps.setInt(3, expense.getAmount());
+            ps.setDouble(3, expense.getAmount());
             ps.setString(4, expense.getDescription());
-            ps.setDate(5, expense.getCreatedAt() == null ? null : java.sql.Date.valueOf(expense.getCreatedAt()));
-            ps.setDate(6, expense.getUpdatedAt() == null ? null : java.sql.Date.valueOf(expense.getUpdatedAt()));
+            ps.setTimestamp(5, expense.getCreatedAt() == null ? null : Timestamp.valueOf(expense.getCreatedAt()));
+            ps.setTimestamp(6, expense.getUpdatedAt() == null ? null : Timestamp.valueOf(expense.getUpdatedAt()));
             ps.setBoolean(7, expense.isApproved()); // for BIT -> boolean
             ps.setBoolean(8, expense.isReimbursed()); // for BIT -> boolean
             ps.setString(9, expense.getReceiptUrl());
@@ -88,10 +90,10 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 expense.getDescription(),
                 expense.getCreatedAt(),
                 expense.getUpdatedAt(),
-                expense.getApproved(),
-                expense.getReimbursed(),
+                expense.isApproved(),
+                expense.isReimbursed(),
                 expense.getReceiptUrl(),
-                expense.getExpenseId() > 0);
+                expense.getExpenseId()) > 0;
     }
 
     @Override
