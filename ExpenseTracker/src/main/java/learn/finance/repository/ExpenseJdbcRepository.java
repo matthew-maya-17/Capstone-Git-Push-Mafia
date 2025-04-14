@@ -42,7 +42,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     @Override
     public Expense addExpense(Expense expense) {
        final String sql = "insert into expense (user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url) " +
-               " values (?,?,?,?,?,?,?,?,?);";
+               "values (?,?,?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -71,14 +71,14 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     public boolean updateExpense(Expense expense) {
         final String sql = "update expense set " +
                 "user_id = ?, " +
-                "catergory_id = ?," +
+                "category_id = ?, " +
                 "amount = ?, " +
-                "description = ?," +
-                "created_at = ?," +
-                "updated_at = ?," +
+                "description = ?, " +
+                "created_at = ?, " +
+                "updated_at = ?, " +
                 "approved = ?, " +
                 "reimbursed = ?," +
-                "receipt_url = ?" +
+                "receipt_url = ? " +
                 "where expense_id = ?";
 
         return jdbcTemplate.update(sql,
@@ -91,7 +91,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 expense.getApproved(),
                 expense.getReimbursed(),
                 expense.getReceiptUrl(),
-                expense.getExpenseId > 0);
+                expense.getExpenseId() > 0);
     }
 
     @Override

@@ -51,8 +51,8 @@ public class UserJdbcRepository implements UserRepository{
     @Override
     public boolean updateUser(User user) {
         final String sql = "update user set " +
-                "first_name = ?," +
-                "last_name = ?" +
+                "first_name = ?, " +
+                "last_name = ? " +
                 "where user_id = ?;";
         return jdbcTemplate.update(sql,
                 user.getFirstName(),
