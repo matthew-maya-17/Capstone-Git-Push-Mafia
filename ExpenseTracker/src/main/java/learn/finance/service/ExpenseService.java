@@ -3,10 +3,13 @@ package learn.finance.service;
 import learn.finance.model.Category;
 import learn.finance.model.Expense;
 import learn.finance.repository.ExpenseRepository;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
@@ -47,7 +50,7 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
-    public List<Expense> findByDateRange(Date startDate, Date endDdate){
+    public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate){
         return expenseRepository.findByDateRange(startDate, endDdate);
     }
 
