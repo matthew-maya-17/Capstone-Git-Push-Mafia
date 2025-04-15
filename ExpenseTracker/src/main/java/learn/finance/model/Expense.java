@@ -14,12 +14,20 @@ public class Expense {
     private boolean reimbursed = false;
     private String receiptUrl;
 
-    public Expense(){
-
+    public Expense() {
     }
 
     public Expense(int expenseId, int userId, int categoryId, double amount, String description, LocalDateTime createdAt, LocalDateTime updatedAt, boolean approved, boolean reimbursed, String receiptUrl) {
-
+        this.expenseId = expenseId;
+        this.userId = userId;
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.approved = approved;
+        this.reimbursed = reimbursed;
+        this.receiptUrl = receiptUrl;
     }
 
     public int getExpenseId() {
