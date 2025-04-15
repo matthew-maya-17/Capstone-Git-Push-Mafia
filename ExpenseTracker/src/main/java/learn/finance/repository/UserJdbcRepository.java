@@ -46,8 +46,12 @@ public class UserJdbcRepository implements UserRepository{
 
     @Override
     public boolean deleteUser(int userId) {
-        jdbcTemplate.update("delete from login where user_id = ?;", userId);
-        return jdbcTemplate.update("delete from user where user_id = ?;", userId) > 0;
+        final String sql3 = "delete from expense where user_id = ?;";
+        jdbcTemplate.update(sql3, userId);
+        final String sql = "delete from login where user_id = ?;";
+        jdbcTemplate.update(sql, userId);
+        final String sql2 = "delete from user where user_id = ?;";
+        return jdbcTemplate.update(sql2, userId) > 0;
     }
 
     @Override

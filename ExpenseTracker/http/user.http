@@ -1,0 +1,41 @@
+@url = http://localhost:8080/api/user 
+// FindAll
+GET {{url}} HTTP/1.1
+
+###
+// Add
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Test",
+    "lastName": "Tester"
+}
+
+###
+// Unhappy case for add, empty first name
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "",
+    "lastName": "Tester"
+}
+
+###
+
+// Unhappy case for add, null first name
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": null,
+    "lastName": "Tester"
+}
+
+###
+// Update
+
+
