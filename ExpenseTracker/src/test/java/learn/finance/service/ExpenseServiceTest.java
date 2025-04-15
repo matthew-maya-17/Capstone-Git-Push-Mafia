@@ -61,7 +61,8 @@ class ExpenseServiceTest {
     void shouldNotUpdateNull() {
         Expense expense = null;
         Result<Expense> result = service.updateExpense(expense);
-
+    }
+    
     @Test
     void shouldFindByDateRange(){
         LocalDateTime start = LocalDateTime.parse("2025-04-06T06:03:49");
