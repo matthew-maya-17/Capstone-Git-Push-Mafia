@@ -27,6 +27,16 @@ public class ExpenseService {
             return result;
         }
 
+        if (expense.getUserId() < 1) {
+            result.addMessage("userId must be set for `update` operation", ResultType.INVALID);
+            return result;
+        }
+
+        if (expense.getCategoryId() < 1 || expense.getCategoryId() > 5) {
+            result.addMessage("categoryId must be set for `update` operation with a valid Id", ResultType.INVALID);
+            return result;
+        }
+
         expense = expenseRepository.addExpense(expense);
         result.setPayload(expense);
         return result;
