@@ -38,24 +38,27 @@ public class LoginJdbcRepository implements LoginRepository{
     @Override
     @Transactional
     public Login create(Login user) {
-        final String sql = "INSERT INTO login (login_id, user_id, user_name, password, role_id) values (?, ?, ?, ?, ?);";
+        // First insert login
+        final String sql = "INSERT INTO login (user_id, user_name, password, role_id, disabled) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        int rowsAffected = jdbcTemplate.update(connection -> {
+        jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, user.getLoginId());
-            ps.setInt(2, user.getUserId());
-            ps.setString(3, user.getUsername());
-            ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getRoleId());
+            ps.setInt(1, user.getUserId());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getRoleId());
+            ps.setBoolean(5, user.isDisabled());
             return ps;
         }, keyHolder);
 
-        if (rowsAffected <= 0) {
-            return null;
-        }
-
         user.setLoginId(keyHolder.getKey().intValue());
+
+        // Then handle roles if needed
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+            updateRoles(user);
+        }
 
         return user;
     }
@@ -72,11 +75,14 @@ public class LoginJdbcRepository implements LoginRepository{
     }
 
     private List<String> getRolesByUsername(String username) {
-        final String sql = "SELECT r.name from role r " +
-                "INNER JOIN login l " +
-                "ON r.role_id = l.role_id " +
-                "WHERE user_name = ?;";
-        return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("user_name"), username);
+        // Use the exact column name that exists in your database
+        final String sql = "SELECT r.name FROM role r " +
+                "INNER JOIN login l ON r.role_id = l.role_id " +
+                "WHERE l.user_name = ?"; // Changed user_name to username
+
+        return jdbcTemplate.query(sql,
+                (rs, rowId) -> rs.getString("name"), // Make sure this matches your column
+                username);
     }
 
     private void updateRoles(Login login) {
