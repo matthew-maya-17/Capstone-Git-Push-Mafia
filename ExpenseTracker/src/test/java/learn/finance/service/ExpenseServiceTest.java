@@ -36,13 +36,13 @@ class ExpenseServiceTest {
         assertEquals(expected, actual);
     }
 
-
-
     @Test
-    void shouldNotUpdateMissingCreatedAt(){
-        Expense expense = new Expense(1, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/");
+    void shouldNotUpdateMissingCreatedAt() {
+        Expense expense = new Expense(1, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00"), null, false, false, "https://www.example.org/");
         expense.setCreatedAt(null);
         Result<Expense> result = service.updateExpense(expense);
+        assertFalse(!result.isSuccess());
+    }
 
     @Test
     void shouldNotAddZeroOrNegativeAmount() {
@@ -82,6 +82,7 @@ class ExpenseServiceTest {
     void shouldNotUpdateNull() {
         Expense expense = null;
         Result<Expense> result = service.updateExpense(expense);
+        assertFalse(result.isSuccess());
     }
     
     @Test
