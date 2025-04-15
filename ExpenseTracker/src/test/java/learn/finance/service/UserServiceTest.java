@@ -161,4 +161,10 @@ class UserServiceTest {
         when(repository.deleteUser(1)).thenReturn(true);
         assertTrue(service.deleteUser(1));
     }
+
+    @Test
+    void shouldNotDelete(){
+        when(repository.deleteUser(499)).thenReturn(false);
+        assertFalse(service.deleteUser(499));
+    }
 }
