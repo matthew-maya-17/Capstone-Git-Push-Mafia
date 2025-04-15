@@ -17,12 +17,18 @@ first_name varchar(50) not null,
 last_name varchar(50) not null
 );
 
+-- role
+create table role (
+role_id int primary key auto_increment,
+`name` varchar(50) not null unique
+);
+
 -- login
 create table login (
 login_id int primary key auto_increment,
 user_id int not null,
 user_name varchar(50) not null,
-password varchar(72) not null,
+password varchar(2048) not null,
 is_admin bit not null,
 disabled bit not null,
 constraint fk_login_user
@@ -51,6 +57,10 @@ constraint fk_category_expense
 );
 
 -- insert data
+insert into role(`name`)
+values
+('USER'),('ADMIN');
+
 insert into category(category_id,category_name)
 values
 (1, 'LABOR'),

@@ -17,17 +17,26 @@ first_name varchar(50) not null,
 last_name varchar(50) not null
 );
 
+-- role
+create table role (
+role_id int primary key auto_increment,
+`name` varchar(50) not null unique
+);
+
 -- login
 create table login (
 login_id int primary key auto_increment,
 user_id int not null,
-user_name varchar(50) not null,
-`password` varchar(72) not null,
-is_admin bit not null,
-disabled bit not null,
+user_name varchar(50) not null unique,
+`password` varchar(2048) not null,
+role_id int not null,
+disabled bit not null default(0),
 constraint fk_login_user
 	foreign key (user_id)
-    references `user`(user_id)
+    references `user`(user_id),
+    constraint fk_login_role
+	foreign key (role_id)
+    references role(role_id)
 );
 
 -- expense
@@ -50,7 +59,12 @@ constraint fk_category_expense
     references category(category_id)
 );
 
+
 -- insert data
+insert into role(`name`)
+values
+('USER'),('ADMIN');
+
 insert into category(category_id,category_name)
 values
 (1, 'LABOR'),
@@ -71,6 +85,7 @@ values
 (2,2, 3, 70.50, 'Compensation for Gas', '2025-10-17 04:30:49', 1, 0, 'http://www.example.com/#actor'),
 (3, 3, 2, 200.30, 'Compensation for Drywall Purchase','2025-02-28 02:15:49', 1, 1, 'https://www.example.net/?acoustics=alarm&belief=army');
 
+select * from role;
 select * from category;
 select * from user;
 select * from expense;
