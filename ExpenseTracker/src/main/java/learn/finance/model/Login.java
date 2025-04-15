@@ -5,7 +5,7 @@ public class Login {
     private int userId;
     private String userName;
     private String password;
-    private boolean isAdmin;
+    private int roleId;
     private boolean disabled;
 
     public boolean isDisabled() {
@@ -48,11 +48,11 @@ public class Login {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 }

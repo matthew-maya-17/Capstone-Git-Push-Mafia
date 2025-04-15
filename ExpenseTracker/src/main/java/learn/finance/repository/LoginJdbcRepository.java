@@ -16,7 +16,7 @@ public class LoginJdbcRepository implements LoginRepository{
 
     @Override
     public Login findLoginByUserId(int userId) {
-        final String sql = "SELECT login_id, user_id, user_name, password, is_admin, disabled FROM login " +
+        final String sql = "SELECT login_id, user_id, user_name, password, role_id, disabled FROM login " +
                 "WHERE user_id = ?;";
 
         return jdbcTemplate.query(sql, new LoginMapper(), userId).stream()

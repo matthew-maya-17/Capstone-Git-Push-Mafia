@@ -15,7 +15,7 @@ public class LoginMapper implements RowMapper<Login> {
         login.setUserId(resultSet.getInt("user_id"));
         login.setUsername(resultSet.getString("user_name"));
         login.setPassword(resultSet.getString("password"));
-        login.setAdmin(resultSet.getBoolean("is_admin"));
+        login.setRoleId(resultSet.getInt("role_id"));
         login.setDisabled(resultSet.getBoolean("disabled"));
         return login;
     }
