@@ -13,4 +13,5 @@ public interface ExpenseRepository {
     Expense addExpense(Expense expense);
     boolean updateExpense(Expense expense);
     boolean updateStatus(int expenseId);
+    boolean deleteExpenseById(int expenseId);
 }
