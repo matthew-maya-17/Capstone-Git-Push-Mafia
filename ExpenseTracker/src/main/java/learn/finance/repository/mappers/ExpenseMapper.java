@@ -16,10 +16,10 @@ public class ExpenseMapper implements RowMapper<Expense> {
         expense.setCategoryId(resultSet.getInt("category_id"));
         expense.setAmount(resultSet.getDouble("amount"));
         expense.setDescription(resultSet.getString("description"));
-        if (resultSet.getDate("created_at") != null) {
+        if (resultSet.getTimestamp("created_at") != null) {
             expense.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
         }
-        if (resultSet.getDate("updated_at") != null) {
+        if (resultSet.getTimestamp("updated_at") != null) {
             expense.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
         }
         expense.setApproved(resultSet.getBoolean("approved"));

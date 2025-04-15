@@ -3,10 +3,12 @@ package learn.finance.service;
 import learn.finance.model.Category;
 import learn.finance.model.Expense;
 import learn.finance.repository.ExpenseRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
