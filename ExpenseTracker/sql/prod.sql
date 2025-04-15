@@ -63,7 +63,7 @@ insert into `user`(user_id, first_name, last_name)
 values
 (1, 'Kyle', 'Box'),
 (2, 'Matthew', 'Maya'),
-(3, 'Joey ', 'Tsui');
+(3, 'Joey', 'Tsui');
 
 insert into expense (expense_id,user_id, category_id, amount, `description`, created_at, approved, reimbursed, receipt_url)
 values

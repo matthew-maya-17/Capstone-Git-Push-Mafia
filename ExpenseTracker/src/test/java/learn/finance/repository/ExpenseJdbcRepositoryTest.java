@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,8 +35,9 @@ class ExpenseJdbcRepositoryTest {
 
     @Test
     void findByDateRange() {
-        Date start = java.sql.Timestamp.valueOf("2025-02-01 00:00:00");
-        Date end = java.sql.Timestamp.valueOf("2025-03-01 00:00:00");
+
+        LocalDateTime start = LocalDateTime.parse("2025-02-01T00:00:00");
+        LocalDateTime end = LocalDateTime.parse("2025-03-01T00:00:00");
 
         List<Expense> expenses = repository.findByDateRange(start,end);
         assertNotNull(expenses);
@@ -53,17 +53,7 @@ class ExpenseJdbcRepositoryTest {
 
     @Test
     void addExpense() {
-        Expense expense = new Expense();
-        expense.setUserId(1);
-        expense.setCategoryId(1);
-        expense.setAmount(123.45);
-        expense.setDescription("testing expense");
-        expense.setApproved(false);
-        expense.setReimbursed(false);
-        expense.setCreatedAt(LocalDateTime.now());
-        expense.setUpdatedAt(LocalDateTime.now());
-        expense.setReceiptUrl("http://test.com");
-
+        Expense expense = new Expense(0,1,1,123.45,"testing expense",LocalDateTime.now(),LocalDateTime.now(),false,false, "http://test.com");
         Expense addedExpense = repository.addExpense(expense);
         assertNotNull(addedExpense);
         assertTrue(addedExpense.getExpenseId() > 0);
@@ -77,9 +67,4 @@ class ExpenseJdbcRepositoryTest {
         assertTrue(updated);
     }
 
-    @Test
-    void updateStatus() {
-        boolean success = repository.updateStatus(1);
-        assertTrue(success);
-    }
 }

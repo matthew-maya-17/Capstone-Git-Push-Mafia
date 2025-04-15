@@ -30,7 +30,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public List<Expense> findByDateRange(Date startDate, Date endDdate) {
+    public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate) {
         final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
                 " where created_at between ? and ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDdate);
@@ -96,12 +96,6 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 expense.isReimbursed(),
                 expense.getReceiptUrl(),
                 expense.getExpenseId()) > 0;
-    }
-
-    @Override
-    public boolean updateStatus(int expenseId) {
-        final String sql = "UPDATE expense SET approved = true WHERE expense_id = ?";
-        return jdbcTemplate.update(sql, expenseId) > 0;
     }
 
     @Override
