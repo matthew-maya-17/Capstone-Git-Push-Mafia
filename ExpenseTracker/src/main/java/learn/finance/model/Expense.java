@@ -14,6 +14,14 @@ public class Expense {
     private boolean reimbursed = false;
     private String receiptUrl;
 
+    public Expense(){
+
+    }
+
+    public Expense(int expenseId, int userId, int categoryId, double amount, String description, LocalDateTime createdAt, LocalDateTime updatedAt, boolean approved, boolean reimbursed, String receiptUrl) {
+
+    }
+
     public int getExpenseId() {
         return expenseId;
     }

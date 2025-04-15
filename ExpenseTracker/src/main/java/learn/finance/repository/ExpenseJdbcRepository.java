@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.sql.Time;
+import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +37,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public List<Expense> findByCategory(Category category) {
+        public List<Expense> findByCategory(Category category) {
         final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense " +
                 "where category_id = ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId());
@@ -54,7 +54,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
             ps.setInt(2, expense.getCategoryId());
             ps.setDouble(3, expense.getAmount());
             ps.setString(4, expense.getDescription());
-            ps.setTimestamp(5, expense.getCreatedAt() == null ? null : Timestamp.valueOf(expense.getCreatedAt()));
+            ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
             ps.setTimestamp(6, expense.getUpdatedAt() == null ? null : Timestamp.valueOf(expense.getUpdatedAt()));
             ps.setBoolean(7, expense.isApproved()); // for BIT -> boolean
             ps.setBoolean(8, expense.isReimbursed()); // for BIT -> boolean
@@ -91,7 +91,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 expense.getAmount(),
                 expense.getDescription(),
                 expense.getCreatedAt(),
-                expense.getUpdatedAt(),
+                Timestamp.valueOf(LocalDateTime.now()),
                 expense.isApproved(),
                 expense.isReimbursed(),
                 expense.getReceiptUrl(),
@@ -101,6 +101,12 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     @Override
     public boolean updateStatus(int expenseId) {
         final String sql = "UPDATE expense SET approved = true WHERE expense_id = ?";
+        return jdbcTemplate.update(sql, expenseId) > 0;
+    }
+
+    @Override
+    public boolean deleteExpenseById(int expenseId){
+        final String sql = "DELETE FROM expense WHERE expense_id = ?";
         return jdbcTemplate.update(sql, expenseId) > 0;
     }
 }
