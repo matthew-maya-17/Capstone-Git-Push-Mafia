@@ -41,7 +41,7 @@ class ExpenseServiceTest {
         Expense expense = new Expense(1, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00"), null, false, false, "https://www.example.org/");
         expense.setCreatedAt(null);
         Result<Expense> result = service.updateExpense(expense);
-        assertFalse(!result.isSuccess());
+        assertFalse(result.isSuccess());
     }
 
     @Test
