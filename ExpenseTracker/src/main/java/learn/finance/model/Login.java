@@ -6,6 +6,15 @@ public class Login {
     private String userName;
     private String password;
     private boolean isAdmin;
+    private boolean disabled;
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
 
     public int getLoginId() {
         return loginId;
