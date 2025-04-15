@@ -61,6 +61,7 @@ class ExpenseServiceTest {
         Expense expense = null;
         Result<Expense> result = service.updateExpense(expense);
         assertEquals(ResultType.INVALID, result.getType());
+        assertFalse(result.isSuccess());
     }
 
     @Test
