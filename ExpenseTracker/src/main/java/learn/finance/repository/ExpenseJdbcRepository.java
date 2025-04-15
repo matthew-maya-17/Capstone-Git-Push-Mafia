@@ -99,12 +99,6 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public boolean updateStatus(int expenseId) {
-        final String sql = "UPDATE expense SET approved = true WHERE expense_id = ?";
-        return jdbcTemplate.update(sql, expenseId) > 0;
-    }
-
-    @Override
     public boolean deleteExpenseById(int expenseId){
         final String sql = "DELETE FROM expense WHERE expense_id = ?";
         return jdbcTemplate.update(sql, expenseId) > 0;

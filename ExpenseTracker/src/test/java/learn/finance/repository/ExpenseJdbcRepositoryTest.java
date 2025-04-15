@@ -67,9 +67,4 @@ class ExpenseJdbcRepositoryTest {
         assertTrue(updated);
     }
 
-    @Test
-    void updateStatus() {
-        boolean success = repository.updateStatus(1);
-        assertTrue(success);
-    }
 }
