@@ -95,10 +95,6 @@ public class ExpenseService {
             return result;
         }
 
-        if (expense.getCreatedAt() == null){
-            result.addMessage("Expense must have a created at Date time!", ResultType.INVALID);
-        }
-
         if (expense.getAmount() <= 0) {
             result.addMessage("Expense amount has to be greater than zero!", ResultType.INVALID);
         }

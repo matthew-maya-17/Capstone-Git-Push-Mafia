@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.LocalDateTime.now;
 
 @Repository
 public class ExpenseJdbcRepository implements ExpenseRepository {
@@ -30,10 +33,10 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate) {
+    public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
         final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
                 " where created_at between ? and ? ;";
-        return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDdate);
+        return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDate);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
             ps.setInt(2, expense.getCategoryId());
             ps.setDouble(3, expense.getAmount());
             ps.setString(4, expense.getDescription());
-            ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             ps.setTimestamp(6, expense.getUpdatedAt() == null ? null : Timestamp.valueOf(expense.getUpdatedAt()));
             ps.setBoolean(7, expense.isApproved()); // for BIT -> boolean
             ps.setBoolean(8, expense.isReimbursed()); // for BIT -> boolean
@@ -91,7 +94,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 expense.getAmount(),
                 expense.getDescription(),
                 expense.getCreatedAt(),
-                Timestamp.valueOf(LocalDateTime.now()),
+                Timestamp.valueOf(now()),
                 expense.isApproved(),
                 expense.isReimbursed(),
                 expense.getReceiptUrl(),
