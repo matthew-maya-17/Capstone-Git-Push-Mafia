@@ -1,7 +1,9 @@
 @url = http://localhost:8080/api/user 
+@token = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJmaWVsZC1hZ2VudCIsInN1YiI6InRlc3R1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE3NDQ3NjcyMjh9.Qw1FZ62r_0bk1hbmEiQw-rlGhVX15uyBTHeO4vNmT_M2tb8bmtW1mhU8CDf8O2NR
+
 // FindAll
 GET {{url}} HTTP/1.1
-
+Authorization: Bearer {{token}}
 ###
 // Add
 POST {{url}} HTTP/1.1
