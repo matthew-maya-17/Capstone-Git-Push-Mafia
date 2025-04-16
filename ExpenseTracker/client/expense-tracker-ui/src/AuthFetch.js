@@ -3,10 +3,6 @@ export function AuthFetch(url, options = {}) {
     //get jwtToken
     const token = localStorage.getItem("jwtToken");
 
-    //if token is missing reject and notify the user
-    if(token){
-        console.log("Found a token")
-    }
     if (!token) {
         return Promise.reject("No token found");
     }
