@@ -59,6 +59,7 @@ function ExpenseForm() {
   const handleChange = (event) => {
     const newExpense = {...Expense}
 
+
       if (event.target.type === "checkbox") {
         newExpense[event.target.name] = event.target.checked;
       } else {
