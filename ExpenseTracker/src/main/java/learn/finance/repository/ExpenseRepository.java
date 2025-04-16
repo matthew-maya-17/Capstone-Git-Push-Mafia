@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ExpenseRepository {
     List<Expense> findAll();
-    List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate);
+    List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDate);
     List<Expense> findByCategory(Category category);
     Expense addExpense(Expense expense);
     boolean updateExpense(Expense expense);
