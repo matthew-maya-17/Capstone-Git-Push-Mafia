@@ -58,15 +58,14 @@ function ExpenseForm() {
   }, [id]);
 
   const handleChange = (event) => {
-
-    const newExpense = {...Expense}
+    const newExpense = { ...Expense };
 
     if (event.target.type === "checkbox") {
-        newExpense[event.target.name] = event.target.checked;
-      } else {
-        newExpense[event.target.name] = event.target.value;
-      }
-    setExpense(newExpense)
+      newExpense[event.target.name] = event.target.checked;
+    } else {
+      newExpense[event.target.name] = event.target.value;
+    }
+    setExpense(newExpense);
   };
 
   const handleSubmit = (event) => {
@@ -106,7 +105,6 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
-
   const updateExpense = (updatedExpense) => {
     updatedExpense.expenseId = id;
 
@@ -135,93 +133,92 @@ function ExpenseForm() {
   };
 
   return (
-
     <>
-    <section>
-      <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
+      <section>
+        <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
 
-      {errors.length > 0 && (
-        <div className="alert alert-danger">
-          <p>The Following Errors were Found: </p>
-          <ul>
-            {errors.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {errors.length > 0 && (
+          <div className="alert alert-danger">
+            <p>The Following Errors were Found: </p>
+            <ul>
+              {errors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <fieldset className="form-group">
-          <label htmlFor="categoryId">Category Id</label>
-          <input
-            id="categoryId"
-            name="categoryId"
-            type="number"
-            className="form-group"
-            value={Expense.categoryId}
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="amount">Amount</label>
-          <input
-            id="amount"
-            name="amount"
-            type="text"
-            className="form-group"
-            value={Expense.amount}
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="approved">Approved</label>
-          <input
-            id="approved"
-            name="approved"
-            type="checkbox"
-            className="form-group"
-            checked={Expense.approved}
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="reimbursed">Reimbursed</label>
-          <input
-            id="reimbursed"
-            name="reimbursed"
-            type="checkbox"
-            className="form-group"
-            checked={Expense.reimbursed}
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="receiptUrl">Receipt Url</label>
-          <input
-            id="receiptUrl"
-            name="receiptUrl"
-            type="text"
-            className="form-group"
-            value={Expense.receiptUrl}
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <button type="submit" className="btn btn-outline-success mr-4 mt-4">
-            {id ? "Update Expense" : "Add Expense"}
-          </button>
-          <Link
-            type="button"
-            className="btn btn-outline-danger mt-4"
-            to={"/expense"}
-          >
-            Cancel
-          </Link>
-        </fieldset>
-      </form>
-    </section>
-   </>
+        <form onSubmit={handleSubmit}>
+          <fieldset className="form-group">
+            <label htmlFor="categoryId">Category Id</label>
+            <input
+              id="categoryId"
+              name="categoryId"
+              type="number"
+              className="form-group"
+              value={Expense.categoryId}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="amount">Amount</label>
+            <input
+              id="amount"
+              name="amount"
+              type="text"
+              className="form-group"
+              value={Expense.amount}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="approved">Approved</label>
+            <input
+              id="approved"
+              name="approved"
+              type="checkbox"
+              className="form-group"
+              checked={Expense.approved}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="reimbursed">Reimbursed</label>
+            <input
+              id="reimbursed"
+              name="reimbursed"
+              type="checkbox"
+              className="form-group"
+              checked={Expense.reimbursed}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="receiptUrl">Receipt Url</label>
+            <input
+              id="receiptUrl"
+              name="receiptUrl"
+              type="text"
+              className="form-group"
+              value={Expense.receiptUrl}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <button type="submit" className="btn btn-outline-success mr-4 mt-4">
+              {id ? "Update Expense" : "Add Expense"}
+            </button>
+            <Link
+              type="button"
+              className="btn btn-outline-danger mt-4"
+              to={"/expense"}
+            >
+              Cancel
+            </Link>
+          </fieldset>
+        </form>
+      </section>
+    </>
   );
 }
 
