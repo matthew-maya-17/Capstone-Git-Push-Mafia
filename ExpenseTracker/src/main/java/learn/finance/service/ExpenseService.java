@@ -29,7 +29,7 @@ public class ExpenseService {
             return result;
         }
 
-        if (expense.getUserId() != 0) {
+        if (expense.getUserId() < 1) {
             result.addMessage("userId must be set for `add` operation", ResultType.INVALID);
             return result;
         }
