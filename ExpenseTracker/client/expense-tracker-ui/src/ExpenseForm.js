@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { AuthFetch } from "./AuthFetch"
+import { AuthFetch } from "./AuthFetch";
 //DEFAULT VARIABLE
 const EXPENSE_DEFAULT = {
   userId: 0,
@@ -47,9 +47,7 @@ function ExpenseForm() {
   const handleChange = (event) => {
     const newExpense = { ...Expense };
 
-    if (event.target.name === "dob") {
-      newExpense.dob = event.target.value;
-    } else if (event.target.type === "checkbox") {
+    if (event.target.type === "checkbox") {
       newExpense[event.target.name] = event.target.checked;
     } else {
       newExpense[event.target.name] = event.target.value;
@@ -148,16 +146,19 @@ function ExpenseForm() {
         )}
         <form onSubmit={handleSubmit}>
           <fieldset className="form-group">
-            <label htmlFor="categoryId">Category Id</label> /* This need to be
-            converted from Category Id to Category Types */
-            <input
-              id="categoryId"
+            <label htmlFor="categoryId">Select Expense Category:</label>
+            <select
               name="categoryId"
-              type="number"
+              id="categoryId"
               className="form-group"
-              value={Expense.categoryId}
               onChange={handleChange}
-            ></input>
+            >
+              <option value="1">Labor</option>
+              <option value="2">Materials</option>
+              <option value="3">Transportation</option>
+              <option value="4">Equipment Rental</option>
+              <option value="5">Misc</option>
+            </select>
           </fieldset>
           <fieldset className="form-group">
             <label htmlFor="amount">Amount</label>

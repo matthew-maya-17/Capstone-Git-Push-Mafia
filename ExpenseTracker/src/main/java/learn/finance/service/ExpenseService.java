@@ -6,7 +6,6 @@ import learn.finance.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,13 +29,13 @@ public class ExpenseService {
             return result;
         }
 
-        if (expense.getUserId() < 1) {
-            result.addMessage("userId must be set for `update` operation", ResultType.INVALID);
+        if (expense.getUserId() != 0) {
+            result.addMessage("userId must be set for `add` operation", ResultType.INVALID);
             return result;
         }
 
         if (expense.getCategoryId() < 1 || expense.getCategoryId() > 5) {
-            result.addMessage("categoryId must be set for `update` operation with a valid Id", ResultType.INVALID);
+            result.addMessage("categoryId must be set for `add` operation with a valid Id", ResultType.INVALID);
             return result;
         }
 

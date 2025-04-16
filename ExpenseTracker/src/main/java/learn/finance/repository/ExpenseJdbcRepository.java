@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
@@ -28,28 +26,28 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
 
     @Override
     public List<Expense> findAll() {
-        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense;";
+        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense;";
         return jdbcTemplate.query(sql, new ExpenseMapper());
     }
 
     @Override
     public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense" +
-                " where created_at between ? and ? ;";
+        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense" +
+                "WHERE created_at BETWEEN ? AND ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDate);
     }
 
     @Override
         public List<Expense> findByCategory(Category category) {
-        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url from expense " +
-                "where category_id = ? ;";
+        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense " +
+                "WHERE category_id = ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId());
     }
 
     @Override
     public Expense addExpense(Expense expense) {
-       final String sql = "insert into expense (user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url) " +
-               "values (?,?,?,?,?,?,?,?,?);";
+       final String sql = "INSERT INTO expense (user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url) " +
+               "VALUES (?,?,?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
