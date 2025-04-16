@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/login/register","/api/login/authenticate").permitAll()
-                .antMatchers("/api/expense/**").permitAll() // Add this line
+                .antMatchers("/api/expense/**").authenticated() // Add this line
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManagerBean(), converter))

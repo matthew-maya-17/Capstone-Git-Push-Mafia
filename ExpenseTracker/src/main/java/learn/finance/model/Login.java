@@ -20,7 +20,7 @@ public class Login extends User {
     private static final String AUTHORITY_PREFIX = "ROLE_";
     private List<String> roles = new ArrayList<>();
 
-    // No-arg constructor for JSON deserialization
+    // Need this no-args constructor to allow user to send a Login Object with just username and password to pass authentication.
     public Login() {
         super("default", "default", true, true, true, true,
                 convertRolesToAuthorities(List.of("USER")));
