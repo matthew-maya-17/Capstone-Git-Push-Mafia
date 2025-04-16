@@ -18,7 +18,9 @@ function ExpenseList() {
           return Promise.reject(`Unexpected Status Code: ${response.status}`);
         }
       })
-      .then((data) => setExpenses(data))
+      .then((data) => {
+        console.log(data)
+        return setExpenses(data)})
       .catch(console.log);
   }, []); // call me once on page load
 
@@ -36,7 +38,8 @@ function ExpenseList() {
             //create a copy of the array
             //remove the expense
             const newExpenses = expenses.filter(
-              (ex) => ex.expenseId !== expenseId
+              (ex) => {
+                return ex.expenseId !== expenseId}
             );
             //update the expense state
             setExpenses(newExpenses);
@@ -75,11 +78,12 @@ function ExpenseList() {
               <tr key={expense.expenseId}>
                 <td>{expense.userId}</td>
                 <td>{expense.categoryId}</td>
+                <td>{expense.amount}</td>
                 <td>{expense.description}</td>
                 <td>{expense.createdAt}</td>
                 <td>{expense.updatedAt}</td>
-                <td>{expense.approved}</td>
-                <td>{expense.reimbursed}</td>
+                <td>{expense.approved ? "Yes" : "No"}</td>
+                <td>{expense.reimbursed ? "Yes" : "No"}</td>
                 <td>{expense.receiptUrl}</td>
                 <td>
                   <Link

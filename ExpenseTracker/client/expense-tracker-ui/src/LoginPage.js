@@ -24,6 +24,7 @@ function LoginPage(){
         })
         .then(data => {
             localStorage.setItem("jwtToken", data.jwt_token);
+            localStorage.setItem("userId", data.user_id); 
             console.log(localStorage)
         })
         .catch(console.log)

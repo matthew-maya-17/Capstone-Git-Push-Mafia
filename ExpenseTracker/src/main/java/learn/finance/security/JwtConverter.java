@@ -24,7 +24,7 @@ public class JwtConverter {
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
-    public String getTokenFromUser(UserDetails user) {
+    public String getTokenFromUser(UserDetails user, int userId) {
 
         String authorities = user.getAuthorities().stream()
                 .map(i -> i.getAuthority())
@@ -35,6 +35,7 @@ public class JwtConverter {
                 .setIssuer(ISSUER)
                 .setSubject(user.getUsername())
                 .claim("authorities", authorities)
+                .claim("userId", userId)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MILLIS))
                 .signWith(key)
                 .compact();
