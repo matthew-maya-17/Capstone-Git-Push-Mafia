@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
+import { fetchUser } from "react";
+
+const CATEGORY_MAP = {
+  1: "Labor",
+  2: "Materials",
+  3: "Transportation",
+  4: "Equipment Rental",
+  5: "Misc",
+};
 
 function ExpenseList() {
   // STATE
@@ -19,8 +28,9 @@ function ExpenseList() {
         }
       })
       .then((data) => {
-        console.log(data)
-        return setExpenses(data)})
+        console.log(data);
+        return setExpenses(data);
+      })
       .catch(console.log);
   }, []); // call me once on page load
 
@@ -37,10 +47,9 @@ function ExpenseList() {
           if (response.status === 204) {
             //create a copy of the array
             //remove the expense
-            const newExpenses = expenses.filter(
-              (ex) => {
-                return ex.expenseId !== expenseId}
-            );
+            const newExpenses = expenses.filter((ex) => {
+              return ex.expenseId !== expenseId;
+            });
             //update the expense state
             setExpenses(newExpenses);
           } else {
@@ -54,7 +63,6 @@ function ExpenseList() {
   return (
     <>
       <section>
-        <h2 className="mb-4">Expenses</h2>
         <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
           Add an Expense
         </Link>
@@ -62,7 +70,7 @@ function ExpenseList() {
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              <th>Category Id</th>
+              <th>Category</th>
               <th>Amount</th>
               <th>Description</th>
               <th>Created At</th>
@@ -77,8 +85,8 @@ function ExpenseList() {
             {expenses.map((expense) => (
               <tr key={expense.expenseId}>
                 <td>{expense.userId}</td>
-                <td>{expense.categoryId}</td>
-                <td>{expense.amount}</td>
+                <td>{CATEGORY_MAP[expense.categoryId]}</td>
+                <td>${Number(expense.amount).toFixed(2)}</td>
                 <td>{expense.description}</td>
                 <td>{expense.createdAt}</td>
                 <td>{expense.updatedAt}</td>
