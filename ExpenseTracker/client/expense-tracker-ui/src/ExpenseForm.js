@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
+
 //DEFAULT VARIABLE
 const EXPENSE_DEFAULT = {
   userId: 0,
@@ -46,12 +47,7 @@ function ExpenseForm() {
   // handleChange
   const handleChange = (event) => {
     const newExpense = { ...Expense };
-
-    if (event.target.type === "checkbox") {
-      newExpense[event.target.name] = event.target.checked;
-    } else {
-      newExpense[event.target.name] = event.target.value;
-    }
+    newExpense[event.target.name] = event.target.value;
     setExpense(newExpense);
   };
 
@@ -99,13 +95,21 @@ function ExpenseForm() {
   // updateFieldAgent
   const updateExpense = () => {
     //Assign field agentId
-    Expense.expenseId = id;
+    console.log(id);
+    Expense.expenseId = Number(id);
     const init = {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(Expense),
+      body: JSON.stringify( {
+        userId: Number(Expense.userId),
+        categoryId: Number(Expense.categoryId),
+        amount: Expense.amount,
+        description: Expense.description,
+        createdAt: Expense.createdAt,
+        updatedAt: Expense.updatedAt,
+        approved: Expense.approved,
+        reimbursed: Expense.reimbursed,
+        receiptUrl: Expense.receiptUrl
+      })
     };
     AuthFetch(`${url}/${id}`, init)
       .then((response) => {
@@ -146,19 +150,16 @@ function ExpenseForm() {
         )}
         <form onSubmit={handleSubmit}>
           <fieldset className="form-group">
-            <label htmlFor="categoryId">Select Expense Category:</label>
-            <select
-              name="categoryId"
+            <label htmlFor="categoryId">Category Id</label> /* This need to be
+            converted from Category Id to Category Types */
+            <input
               id="categoryId"
+              name="categoryId"
+              type="number"
               className="form-group"
+              value={Expense.categoryId}
               onChange={handleChange}
-            >
-              <option value="1">Labor</option>
-              <option value="2">Materials</option>
-              <option value="3">Transportation</option>
-              <option value="4">Equipment Rental</option>
-              <option value="5">Misc</option>
-            </select>
+            ></input>
           </fieldset>
           <fieldset className="form-group">
             <label htmlFor="amount">Amount</label>
