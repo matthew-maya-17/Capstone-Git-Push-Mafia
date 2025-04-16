@@ -1,6 +1,7 @@
 package learn.finance.repository;
 
 import learn.finance.model.User;
+import learn.finance.repository.mappers.ExpenseMapper;
 import learn.finance.repository.mappers.UserMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -22,6 +23,14 @@ public class UserJdbcRepository implements UserRepository{
     public List<User> findAll() {
         final String sql = "select user_id, first_name, last_name from user;";
         return jdbcTemplate.query(sql, new UserMapper());
+    }
+
+    @Override
+    public User findById(int userId){
+        final String sql = "select user_id, first_name, last_name from user " +
+                "where user_id = ?;";
+        return jdbcTemplate.query(sql, new UserMapper(), userId).stream()
+                .findFirst().orElse(null);
     }
 
     @Override

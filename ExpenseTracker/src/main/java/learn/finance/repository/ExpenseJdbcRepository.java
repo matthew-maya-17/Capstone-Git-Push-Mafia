@@ -31,8 +31,17 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
+    public Expense findById(int expenseId){
+        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
+                "from expense " +
+                "where expense_id = ?;";
+        return jdbcTemplate.query(sql, new ExpenseMapper(), expenseId).stream()
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense" +
+        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense " +
                 "WHERE created_at BETWEEN ? AND ? ;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), startDate, endDate);
     }

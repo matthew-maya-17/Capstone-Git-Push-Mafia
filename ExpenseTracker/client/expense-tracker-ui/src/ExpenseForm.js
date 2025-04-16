@@ -8,6 +8,7 @@ const getUserIdFromToken = () => {
   const token = localStorage.getItem("jwtToken");
   try {
     const decoded = jwtDecode(token);
+    console.log(decoded)
     return decoded?.userId || 0;
   } catch (error) {
     console.warn("Failed to decode token:", error);

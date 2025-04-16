@@ -69,6 +69,16 @@ class ExpenseServiceTest {
         Result<Expense> result = service.addExpense(expense);
         assertTrue(result.isSuccess());
     }
+
+    @Test
+    void shouldFindExpenseById() {
+        // pass-through test, probably not useful
+        Expense expense = new Expense(0, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/");
+        Expense expected = new Expense(0, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/");
+        when(repository.findById(1)).thenReturn(expected);
+        Expense actual = service.findById(1);
+        assertEquals(expected, actual);
+    }
       
     @Test
     void shouldNotUpdateNull() {

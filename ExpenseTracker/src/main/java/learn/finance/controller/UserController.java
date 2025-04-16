@@ -1,6 +1,7 @@
 package learn.finance.controller;
 
 import learn.finance.exception.ErrorResponse;
+import learn.finance.model.Expense;
 import learn.finance.model.User;
 import learn.finance.service.Result;
 import learn.finance.service.UserService;
@@ -24,6 +25,11 @@ public class UserController {
     @GetMapping
     public List<User> findAll(){
         return service.findAll();
+    }
+
+    @GetMapping("/{userId}")
+    public User findByid(@PathVariable int userId){
+        return service.findById(userId);
     }
 
     @PostMapping
