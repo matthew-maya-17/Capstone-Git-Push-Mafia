@@ -49,6 +49,10 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
+    public Expense findById(int expenseId){
+        return expenseRepository.findById(expenseId);
+    }
+
     public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate){
         return expenseRepository.findByDateRange(startDate, endDdate);
     }
@@ -64,7 +68,7 @@ public class ExpenseService {
             return result;
         }
 
-        if (expense.getUserId() < 1) {
+        if (expense.getUserId() != 0) {
             result.addMessage("userId must be set for `update` operation", ResultType.INVALID);
             return result;
         }

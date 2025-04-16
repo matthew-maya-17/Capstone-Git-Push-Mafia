@@ -1,5 +1,6 @@
 package learn.finance.service;
 
+import learn.finance.model.Expense;
 import learn.finance.model.User;
 import learn.finance.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,24 @@ class UserServiceTest {
         when(repository.findAll()).thenReturn(users);
         List<User> actual = service.findAll();
         assertEquals(users, actual);
+    }
+
+    @Test
+    void shouldFindById(){
+        User user = new User();
+        user.setUserId(1);
+        user.setFirstName("Joey");
+        user.setLastName("Tsui");
+
+        User expected = new User();
+        expected.setUserId(1);
+        expected.setFirstName("Joey");
+        expected.setLastName("Tsui");
+
+        when(repository.findById(1)).thenReturn(expected);
+
+        User actual = service.findById(1);
+        assertEquals(expected, actual);
     }
 
     @Test

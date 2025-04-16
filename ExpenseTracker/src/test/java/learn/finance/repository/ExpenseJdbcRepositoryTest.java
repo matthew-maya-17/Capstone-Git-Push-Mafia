@@ -34,6 +34,12 @@ class ExpenseJdbcRepositoryTest {
     }
 
     @Test
+    void findById(){
+        Expense expense = repository.findById(1);
+        assertNotNull(expense);
+    }
+
+    @Test
     void findByDateRange() {
 
         LocalDateTime start = LocalDateTime.parse("2025-02-01T00:00:00");
