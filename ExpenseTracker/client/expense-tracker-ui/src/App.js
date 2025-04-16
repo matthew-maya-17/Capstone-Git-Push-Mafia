@@ -4,8 +4,8 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
 import Home from "./Home";
 import NotFound from "./NotFound";
-import LoginPage from "./LoginPage";
 import Registration from "./Registration";
+import LoginPage from "./LoginPage";
 
 function App() {
   return (
@@ -19,6 +19,8 @@ function App() {
           <Route path="/expense/add" element={<ExpenseForm />} />
           <Route path="/expense/edit/:id" element={<ExpenseForm />} />
           <Route path="/expense" element={<ExpenseList />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Registration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
