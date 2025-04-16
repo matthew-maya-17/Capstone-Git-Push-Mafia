@@ -67,7 +67,7 @@ POST http://localhost:8080/api/login/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "testuser",
+  "username": "testuserr",
   "password": "Test123!",
   "userId": 3
 }
