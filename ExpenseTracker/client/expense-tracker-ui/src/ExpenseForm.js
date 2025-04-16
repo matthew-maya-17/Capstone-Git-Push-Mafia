@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { AuthFetch } from "./AuthFetch";
 
 //DEFAULT VARIABLE
 const EXPENSE_DEFAULT = {
@@ -24,7 +25,7 @@ function ExpenseForm() {
   //useEffect
   useEffect(() => {
     if (id) {
-      fetch(`${url}/${id}`)
+      AuthFetch(`${url}/${id}`)
         .then((response) => {
           if (response.status === 200) {
             return response.json();
@@ -77,7 +78,7 @@ function ExpenseForm() {
       },
       body: JSON.stringify(Expense),
     };
-    fetch(url, init)
+    AuthFetch(url, init)
       .then((response) => {
         if (response.status === 201 || response.status === 400) {
           return response.json();
@@ -109,7 +110,7 @@ function ExpenseForm() {
       },
       body: JSON.stringify(Expense),
     };
-    fetch(`${url}/${id}`, init)
+    AuthFetch(`${url}/${id}`, init)
       .then((response) => {
         if (response.status === 204) {
           return null;
