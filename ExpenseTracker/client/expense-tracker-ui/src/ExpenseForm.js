@@ -5,7 +5,7 @@ import { AuthFetch } from "./AuthFetch";
 const EXPENSE_DEFAULT = {
   userId: 0,
   categoryId: 5,
-  amount: 1,
+  amount: 0,
   description: "DEFAULT",
   approved: false,
   reimbursed: false,
