@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthFetch } from "./AuthFetch";
 
 function ExpenseList() {
   // STATE
@@ -9,7 +10,7 @@ function ExpenseList() {
 
   // useEffect to fetch data when components mount
   useEffect(() => {
-    fetch(url)
+    AuthFetch(url)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -29,7 +30,7 @@ function ExpenseList() {
       const init = {
         method: "DELETE",
       };
-      fetch(`${url}/${expenseId}`, init)
+      AuthFetch(`${url}/${expenseId}`, init)
         .then((response) => {
           if (response.status === 204) {
             //create a copy of the array
