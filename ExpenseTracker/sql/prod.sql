@@ -30,7 +30,7 @@ user_id int not null,
 user_name varchar(50) not null unique,
 `password` varchar(2048) not null,
 role_id int not null,
-disabled bit not null default(0),
+disabled bit not null default 0,
 constraint fk_login_user
 	foreign key (user_id)
     references `user`(user_id),
@@ -84,6 +84,12 @@ values
 (1,1, 1, 150.79, 'Pay for this week','2025-04-06 06:03:49', 0, 0, 'https://www.example.org/'),
 (2,2, 3, 70.50, 'Compensation for Gas', '2025-10-17 04:30:49', 1, 0, 'http://www.example.com/#actor'),
 (3, 3, 2, 200.30, 'Compensation for Drywall Purchase','2025-02-28 02:15:49', 1, 1, 'https://www.example.net/?acoustics=alarm&belief=army');
+
+
+-- passwords are set to "P@ssw0rd!"
+insert into login (user_id, user_name, `password`, role_id, disabled)
+values
+(1, "kbox799@gmail.com", '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 2, false);
 
 select * from role;
 select * from category;
