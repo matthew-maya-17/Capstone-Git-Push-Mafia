@@ -32,18 +32,18 @@ public class Login extends User {
                  int roleId, boolean disabled, List<String> roles) {
         super(userName,
                 password,
-                !disabled,  // enabled
-                true,       // account non-expired
-                true,       // credentials non-expired
-                true,       // account non-locked
-                convertRolesToAuthorities(roles != null ? roles : List.of("USER")));
+                !disabled,
+                true,
+                true,
+                true,
+                convertRolesToAuthorities( roleId == 1 ? List.of("USER") : List.of("ADMIN")));
         this.loginId = loginId;
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.roleId = roleId;
         this.disabled = disabled;
-        this.roles = roles != null ? roles : List.of("USER");
+        this.roles = roleId == 1 ? List.of("USER") : List.of("ADMIN");
     }
 
     public static List<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
