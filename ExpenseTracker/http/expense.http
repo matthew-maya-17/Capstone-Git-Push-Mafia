@@ -1,5 +1,5 @@
 @url = http://localhost:8080/api/expense
-@token = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJmaWVsZC1hZ2VudCIsInN1YiI6InRlc3R1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE3NDQ3Njc2Mzd9.pBW-d1I6nF81AeD_I-E-LxpuooX6gaDPeK8rojAuQqMY6fE7PdwEXJQscj_JMDt5
+@token = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJmaWVsZC1hZ2VudCIsInN1YiI6InRlc3R1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE3NDQ3NzM5Mzh9.C5SGi6C5m4VdUtim7ubawqzcZ5KflXJ0AoyrKP-rVZNYpTwG3JXURxM0YP6tixCz
 // Get All Expenses
 GET {{url}} HTTP/1.1
 

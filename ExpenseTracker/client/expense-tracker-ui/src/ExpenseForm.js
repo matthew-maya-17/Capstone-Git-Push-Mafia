@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { AuthFetch } from "./AuthFetch";
-
+import { AuthFetch } from "./AuthFetch"
 //DEFAULT VARIABLE
 const EXPENSE_DEFAULT = {
   userId: 0,
