@@ -49,17 +49,25 @@ public class AuthController {
                             loginRequest.getPassword()
                     );
 
-            // 2. Let Spring Security handle the authentication
+            // 2. Authenticate
             Authentication authentication = authenticationManager.authenticate(authToken);
-            System.out.println("Auth successful for: " + authentication.getName());
 
-            // 3. Generate JWT token
+            // 3. Get the full user details
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String jwtToken = converter.getTokenFromUser(userDetails);
 
-            // 4. Return response
+            // 4. Load the complete Login entity to get userId
+            Login authenticatedUser = (Login) userDetails;
+            int userId = authenticatedUser.getUserId();
+
+            System.out.println("Auth successful for user ID: " + userId);
+
+            // 5. Generate JWT token with userId
+            String jwtToken = converter.getTokenFromUser(userDetails, userId);
+
+            // 6. Return response
             Map<String, String> response = new HashMap<>();
             response.put("jwt_token", jwtToken);
+            response.put("user_id", String.valueOf(userId)); // Optionally return userId in response
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException ex) {
