@@ -89,7 +89,9 @@ values
 -- passwords are set to "P@ssw0rd!"
 insert into login (user_id, user_name, `password`, role_id, disabled)
 values
-(1, "kbox799@gmail.com", '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 2, false);
+(1, "kbox799@gmail.com", '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 2, false),
+(2, "mmaya@gmail.com",'$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1, false ),
+(3, "jtsui@gmail.com",'$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1, true );
 
 select * from role;
 select * from category;
