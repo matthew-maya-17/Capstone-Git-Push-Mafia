@@ -17,44 +17,57 @@ function LoginPage() {
       body: JSON.stringify({ username, password }),
     };
 
-    fetch(url, init)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Login failed");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        localStorage.setItem("jwtToken", data.jwt_token);
-        localStorage.setItem("userId", data.user_id);
-        navigate("/expense");
-      })
-      .catch(console.log);
-  };
+        fetch(url, init)
+        .then(response => {
+            if (!response.ok) {
+            throw new Error("Login failed");
+            }
+            return response.json();
+        })
+        .then(data => {
+            localStorage.setItem("jwtToken", data.jwt_token);
+            localStorage.setItem("userId", data.user_id);
+            navigate("/expense");
+        })
+        .catch(console.log)
+    }
 
-  return (
-    <>
-      <h1>This is the Login Page</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-    </>
-  );
+    return (
+      <>
+        <div className="container w-50 mt-5">
+          <h2 className="mb-4">Login</h2>
+          <form onSubmit={handleSubmit} className="form-group ">
+            <div className="mb-3">
+              <label className="form-label">Username</label>
+              <input
+                type="text"
+                placeholder="Username"
+                className="form-control"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                placeholder="Password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn btn-outline-success mr-4 mt-4">
+              Login
+            </button>
+          </form>
+        </div>
+      </>
+    );
 }
 
 export default LoginPage;
