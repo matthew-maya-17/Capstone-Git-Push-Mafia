@@ -1,5 +1,7 @@
 package learn.finance.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class Expense {
@@ -8,7 +10,9 @@ public class Expense {
     private int categoryId;
     private double amount;
     private String description;
+    @JsonFormat(pattern = "yyyy-MM-dd '@' hh:mm a")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd '@' hh:mm a")
     private LocalDateTime updatedAt;
     private boolean approved = false;
     private boolean reimbursed = false;

@@ -8,7 +8,7 @@ const getUserIdFromToken = () => {
   const token = localStorage.getItem("jwtToken");
   try {
     const decoded = jwtDecode(token);
-    console.log(decoded)
+    console.log(decoded);
     return decoded?.userId || 0;
   } catch (error) {
     console.warn("Failed to decode token:", error);
@@ -25,8 +25,8 @@ function ExpenseForm() {
   const [Expense, setExpense] = useState({
     userId,
     categoryId: 5,
-    amount: 1,
-    description: "DEFAULT",
+    amount: 0,
+    description: "DEFAULT DESCRIPTION",
     approved: false,
     reimbursed: false,
     receiptUrl: "N/A",
@@ -150,24 +150,42 @@ function ExpenseForm() {
 
         <form onSubmit={handleSubmit}>
           <fieldset className="form-group">
-            <label htmlFor="categoryId">Category Id</label>
-            <input
-              id="categoryId"
+            <label htmlFor="categoryId">Select Expense Category:</label>
+            <select
               name="categoryId"
-              type="number"
+              id="categoryId"
               className="form-group"
               value={Expense.categoryId}
               onChange={handleChange}
-            />
+            >
+              <option value="1">Labor</option>
+              <option value="2">Materials</option>
+              <option value="3">Transportation</option>
+              <option value="4">Equipment Rental</option>
+              <option value="5">Misc</option>
+            </select>
           </fieldset>
           <fieldset className="form-group">
             <label htmlFor="amount">Amount</label>
             <input
               id="amount"
               name="amount"
-              type="text"
+              type="number"
+              step="0.01"
+              min="0"
               className="form-group"
               value={Expense.amount}
+              onChange={handleChange}
+            />
+          </fieldset>
+          <fieldset className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              id="description"
+              name="description"
+              type="text"
+              className="form-group"
+              value={Expense.description}
               onChange={handleChange}
             />
           </fieldset>
