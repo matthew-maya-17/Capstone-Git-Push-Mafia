@@ -78,11 +78,12 @@ function ExpenseList() {
               <tr key={expense.expenseId}>
                 <td>{expense.userId}</td>
                 <td>{expense.categoryId}</td>
+                <td>{expense.amount}</td>
                 <td>{expense.description}</td>
                 <td>{expense.createdAt}</td>
                 <td>{expense.updatedAt}</td>
-                <td>{expense.approved}</td>
-                <td>{expense.reimbursed}</td>
+                <td>{expense.approved ? "Yes" : "No"}</td>
+                <td>{expense.reimbursed ? "Yes" : "No"}</td>
                 <td>{expense.receiptUrl}</td>
                 <td>
                   <Link

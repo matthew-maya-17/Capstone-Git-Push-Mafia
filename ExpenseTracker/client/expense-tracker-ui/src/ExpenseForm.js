@@ -57,16 +57,15 @@ function ExpenseForm() {
   }, [id]);
 
   const handleChange = (event) => {
+
     const newExpense = {...Expense}
 
-
-      if (event.target.type === "checkbox") {
+    if (event.target.type === "checkbox") {
         newExpense[event.target.name] = event.target.checked;
       } else {
         newExpense[event.target.name] = event.target.value;
       }
-
-      setExpense(newExpense)
+    setExpense(newExpense)
   };
 
   const handleSubmit = (event) => {
@@ -106,6 +105,7 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
+
   const updateExpense = (updatedExpense) => {
     updatedExpense.expenseId = id;
 
@@ -134,6 +134,8 @@ function ExpenseForm() {
   };
 
   return (
+
+    <>
     <section>
       <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
 
@@ -218,6 +220,7 @@ function ExpenseForm() {
         </fieldset>
       </form>
     </section>
+   </>
   );
 }
 
