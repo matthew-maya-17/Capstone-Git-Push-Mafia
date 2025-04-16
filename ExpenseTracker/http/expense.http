@@ -45,3 +45,40 @@ Content-Type: application/json
 ###
 // Delete run previous api calls before calling this delete
 DELETE {{url}}/4 HTTP/1.1
+
+###
+// newuser
+// ValidPass123!
+
+POST http://localhost:8080/api/login/register
+Content-Type: application/json
+
+{
+  "username": "newAdmin",
+  "password": "ValidPass123!",
+  "userId": 2,
+  "roleId": 2,
+  "roles": ["ADMIN"]
+}
+
+###
+
+POST http://localhost:8080/api/login/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "Test123!",
+  "userId": 3
+}
+
+###
+// Trying to login
+
+POST http://localhost:8080/api/login/authenticate
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "Test123!"
+}
