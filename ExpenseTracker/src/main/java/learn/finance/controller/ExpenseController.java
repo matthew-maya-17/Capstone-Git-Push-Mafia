@@ -27,6 +27,11 @@ public class ExpenseController {
         return service.findAll();
     }
 
+    @GetMapping("/{expenseId}")
+    public Expense findByid(@PathVariable int expenseId){
+        return service.findById(expenseId);
+    }
+
     @GetMapping("/date-range")
     public List<Expense> findByDateRange(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end){
         return service.findByDateRange(start, end);

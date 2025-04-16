@@ -32,6 +32,12 @@ KnownGoodState knownGoodState;
     }
 
     @Test
+    void shouldFindById(){
+        User user = repository.findById(1);
+        assertNotNull(user);
+    }
+
+    @Test
     void shouldAddUser() {
         User user = new User();
         user.setFirstName("Billy");

@@ -19,6 +19,10 @@ public class UserService {
         return repository.findAll();
     }
 
+    public User findById(int userId){
+        return repository.findById(userId);
+    }
+
     public Result<User> addUser(User user){
         Result<User> result = validate(user);
 
