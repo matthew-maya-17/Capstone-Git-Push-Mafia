@@ -40,7 +40,7 @@ public class LoginJdbcRepository implements LoginRepository{
     public Login create(Login user) {
         // First insert login
         final String sql = "INSERT INTO login (user_id, user_name, password, role_id, disabled) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?);";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -67,7 +67,7 @@ public class LoginJdbcRepository implements LoginRepository{
     @Transactional
     public void update(Login user) {
         final String sql = "UPDATE login SET user_id = ?, user_name = ?, password = ?, role_id = ?, disabled = ?"
-                + " WHERE login_id = ?";
+                + " WHERE login_id = ?;";
         updateRoles(user);
 
         jdbcTemplate.update(sql, user.getUserId(), user.getUsername(), user.getPassword(),
@@ -78,7 +78,7 @@ public class LoginJdbcRepository implements LoginRepository{
         // Use the exact column name that exists in your database
         final String sql = "SELECT r.name FROM role r " +
                 "INNER JOIN login l ON r.role_id = l.role_id " +
-                "WHERE l.user_name = ?"; // Changed user_name to username
+                "WHERE l.user_name = ?;"; // Changed user_name to username
 
         return jdbcTemplate.query(sql,
                 (rs, rowId) -> rs.getString("name"), // Make sure this matches your column
