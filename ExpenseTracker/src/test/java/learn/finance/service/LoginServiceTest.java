@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import javax.validation.ValidationException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -68,7 +69,7 @@ class LoginServiceTest {
         expected.setRoleId(2);
         expected.setDisabled(false);
 
-        when(repository.create(login)).thenReturn(expected);
+        when(repository.create(any(Login.class))).thenReturn(expected);
 
         Login result = service.create(login);
 
