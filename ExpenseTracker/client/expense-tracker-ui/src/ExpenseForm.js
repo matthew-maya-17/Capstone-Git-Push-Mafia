@@ -132,8 +132,6 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
-  console.log(token)
-
   return token == null ? navigate('/login') : (
     <>
       <div className="container mt-5 w-50">
