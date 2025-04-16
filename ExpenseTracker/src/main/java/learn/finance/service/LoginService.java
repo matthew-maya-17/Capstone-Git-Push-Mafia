@@ -37,9 +37,20 @@ public class LoginService implements UserDetailsService {
         validate(login.getUsername());
         validatePassword(login.getPassword());
 
-        // Default role if none provided (e.g., "USER")
-        List<String> roles = login.getRoles() != null ? login.getRoles() : List.of("USER");
+//        List<String> roles = login.getRoles() != null ? login.getRoles() : List.of("USER");
+        List<String> roles;
 
+        if (login.getRoles() != null) {
+            roles = login.getRoles();
+        } else {
+            if (login.getRoleId() == 1) {
+                roles = List.of("ROLE_USER");
+            } else if (login.getRoleId() == 2) {
+                roles = List.of("ROLE_ADMIN");
+            } else {
+                roles = List.of("ROLE_USER");
+            }
+        }
         login.setPassword(encoder.encode(login.getPassword()));
         return repository.create(new Login(0, login.getUserId(), login.getUsername(),
                 login.getPassword(), login.getRoleId(), false, roles));
