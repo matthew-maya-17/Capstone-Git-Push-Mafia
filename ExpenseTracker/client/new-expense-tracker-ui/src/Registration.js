@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { data } from "react-router-dom";
+import AuthLink from "./AuthLink";
 function Registration() {
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
@@ -60,6 +61,7 @@ function Registration() {
       });
   };
   return (
+    <AuthLink>
     <div className="container mt-5 w-50">
       <h2 className="register-heading mb-4">Register A new User</h2>
       <form className="form-group" onSubmit={handleSubmit}>
@@ -150,6 +152,7 @@ function Registration() {
         </div>
       </form>
     </div>
+    </AuthLink>
   );
 }
 export default Registration;

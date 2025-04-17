@@ -59,7 +59,7 @@ table {
 body {
   font-size: 1.8rem;
   line-height: 1.5;
-
+  font-family: 'Roboto', sans-serif;
 }
 
 html {
@@ -137,4 +137,3 @@ header{
 .form-control {
   font-size: 2.2rem;
 }
-

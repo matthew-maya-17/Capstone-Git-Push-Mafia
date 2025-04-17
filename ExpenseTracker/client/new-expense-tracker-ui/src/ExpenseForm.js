@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
 import { jwtDecode } from "jwt-decode";
+import AuthLink from "./AuthLink";
+
 // Function to safely decode token and get userId
 const getUserIdFromToken = () => {
   const token = localStorage.getItem("jwtToken");
@@ -19,10 +21,7 @@ function ExpenseForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const url = "http://localhost:8080/api/expense";
-  const token =
-    localStorage.getItem("jwtToken") != null
-      ? localStorage.getItem("jwtToken")
-      : null;
+  const token = localStorage.getItem("jwtToken") != null? localStorage.getItem("jwtToken"): null;
   const [Expense, setExpense] = useState({
     userId,
     categoryId: 5,
@@ -32,7 +31,9 @@ function ExpenseForm() {
     reimbursed: false,
     receiptUrl: "N/A",
   });
+
   const [errors, setErrors] = useState([]);
+
   useEffect(() => {
     if (id) {
       AuthFetch(`${url}/${id}`)
@@ -55,6 +56,7 @@ function ExpenseForm() {
       }));
     }
   }, [id]);
+  
   const handleChange = (event) => {
     const newExpense = { ...Expense };
     if (event.target.type === "checkbox") {
@@ -120,10 +122,8 @@ function ExpenseForm() {
       })
       .catch(console.log);
   };
-  return token == null ? (
-    navigate("/login")
-  ) : (
-    <>
+  return (
+    <AuthLink>
       <div className="container mt-5 w-50">
         <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
         {errors.length > 0 && (
@@ -240,7 +240,7 @@ function ExpenseForm() {
           </div>
         </form>
       </div>
-    </>
+    </AuthLink>
   );
 }
 export default ExpenseForm;
