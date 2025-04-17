@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
@@ -14,6 +15,7 @@ const CATEGORY_MAP = {
 function ExpenseList() {
   // STATE
   const [expenses, setExpenses] = useState([]);
+  const token = localStorage.getItem("jwtToken")
   const url = "http://localhost:8080/api/expense";
   const navigate = useNavigate();
 
@@ -62,10 +64,7 @@ function ExpenseList() {
 
   return (
     <>
-      <section>
-        <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
-          Add an Expense
-        </Link>
+      <div className="container" style={{ maxWidth: "90%" }}>
         <table className="table table-striped table-bordered table-hover">
           <thead className="table-dark">
             <tr>
@@ -111,7 +110,10 @@ function ExpenseList() {
             ))}
           </tbody>
         </table>
-      </section>
+                <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
+          Add an Expense
+        </Link>
+      </div>
     </>
   );
 }

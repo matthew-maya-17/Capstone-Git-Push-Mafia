@@ -21,7 +21,7 @@ function ExpenseForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const url = "http://localhost:8080/api/expense";
-
+  const token = localStorage.getItem("jwtToken") != null ? localStorage.getItem("jwtToken") : null;
   const [Expense, setExpense] = useState({
     userId,
     categoryId: 5,
@@ -97,7 +97,7 @@ function ExpenseForm() {
       })
       .then((data) => {
         if (data.expenseId) {
-          navigate("/");
+          navigate("/expense");
         } else {
           setErrors(data);
         }
@@ -117,7 +117,7 @@ function ExpenseForm() {
     AuthFetch(`${url}/${id}`, init)
       .then((response) => {
         if (response.status === 204) {
-          navigate("/");
+          navigate("/expense");
         } else if (response.status === 400) {
           return response.json();
         } else {
@@ -132,9 +132,9 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
-  return (
+  return token == null ? navigate('/login') : (
     <>
-      <section>
+      <div className="container mt-5 w-50">
         <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
 
         {errors.length > 0 && (
@@ -147,14 +147,15 @@ function ExpenseForm() {
             </ul>
           </div>
         )}
-
-        <form onSubmit={handleSubmit}>
-          <fieldset className="form-group">
-            <label htmlFor="categoryId">Select Expense Category:</label>
+        <form className="form-group" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="categoryId" className="form-label">
+              Select Expense Category:
+            </label>
             <select
               name="categoryId"
               id="categoryId"
-              className="form-group"
+              className="form-control"
               value={Expense.categoryId}
               onChange={handleChange}
             >
@@ -164,65 +165,43 @@ function ExpenseForm() {
               <option value="4">Equipment Rental</option>
               <option value="5">Misc</option>
             </select>
-          </fieldset>
-          <fieldset className="form-group">
-            <label htmlFor="amount">Amount</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="amount" className="form-label">
+              Amount
+            </label>
             <input
               id="amount"
               name="amount"
               type="number"
               step="0.01"
               min="0"
-              className="form-group"
+              className="form-control"
               value={Expense.amount}
               onChange={handleChange}
             />
-          </fieldset>
-          <fieldset className="form-group">
-            <label htmlFor="description">Description</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
             <input
               id="description"
               name="description"
               type="text"
-              className="form-group"
+              className="form-control"
               value={Expense.description}
               onChange={handleChange}
             />
-          </fieldset>
-          <fieldset className="form-group">
-            <label htmlFor="approved">Approved</label>
-            <input
-              id="approved"
-              name="approved"
-              type="checkbox"
-              className="form-group"
-              checked={Expense.approved}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <label htmlFor="reimbursed">Reimbursed</label>
-            <input
-              id="reimbursed"
-              name="reimbursed"
-              type="checkbox"
-              className="form-group"
-              checked={Expense.reimbursed}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <fieldset className="form-group">
+          </div>
+          
+          <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
-            <input
-              id="receiptUrl"
-              name="receiptUrl"
-              type="text"
-              className="form-group"
-              value={Expense.receiptUrl}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <fieldset className="form-group">
+            <input class="form-control" type="file" id="formFile"></input>
+          </div>
+          <div className="mb-3">
             <button type="submit" className="btn btn-outline-success mr-4 mt-4">
               {id ? "Update Expense" : "Add Expense"}
             </button>
@@ -233,9 +212,9 @@ function ExpenseForm() {
             >
               Cancel
             </Link>
-          </fieldset>
+          </div>
         </form>
-      </section>
+      </div>
     </>
   );
 }
