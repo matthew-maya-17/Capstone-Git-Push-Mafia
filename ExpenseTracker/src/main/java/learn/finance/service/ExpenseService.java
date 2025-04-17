@@ -49,8 +49,12 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
-    public Expense findById(int expenseId){
-        return expenseRepository.findById(expenseId);
+    public List<Expense> findExpensesByUserId(int userId){
+        return expenseRepository.findExpensesByUserId(userId);
+    }
+
+    public Expense findByExpenseId(int expenseId){
+        return expenseRepository.findByExpenseId(expenseId);
     }
 
     public List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDdate){

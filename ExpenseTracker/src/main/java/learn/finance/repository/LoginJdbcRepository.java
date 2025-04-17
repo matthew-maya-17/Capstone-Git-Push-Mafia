@@ -66,8 +66,8 @@ public class LoginJdbcRepository implements LoginRepository{
     @Override
     @Transactional
     public void update(Login user) {
-        final String sql = "UPDATE login SET user_id = ?, user_name = ?, password = ?, role_id = ?, disabled = ?"
-                + " WHERE login_id = ?;";
+        final String sql = "UPDATE login SET user_id = ?, user_name = ?, password = ?, role_id = ?, disabled = ? "
+                + "WHERE login_id = ?;";
         updateRoles(user);
 
         jdbcTemplate.update(sql, user.getUserId(), user.getUsername(), user.getPassword(),
