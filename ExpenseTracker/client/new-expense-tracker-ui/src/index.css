@@ -60,6 +60,8 @@ body {
   font-size: 1.8rem;
   line-height: 1.5;
   font-family: 'Roboto', sans-serif;
+  background-color: dark;
+  /* padding-top: 80px; */
 }
 
 html {
@@ -137,3 +139,62 @@ header{
 .form-control {
   font-size: 2.2rem;
 }
+
+.container {
+    max-width: 85%;
+    margin: auto;
+
+}
+
+
+.section1 nav{ 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.section1 nav .navlink ul{
+    display: flex;
+    align-items: center;
+}
+
+.section1 nav .navlink li{
+    margin: 0 20px;
+}
+
+.link a {
+  position: relative;
+  padding-bottom: 5px;
+  color: black;
+}
+
+
+.link a::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(29, 73, 142);
+  transition: all 0.3s ease;
+}
+
+
+.link a:hover::after {
+  width: 85%;
+}
+
+.section1 {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, .5); /* Adjust the values as needed */
+  transition: background-color .5s ease;
+}
+
+
+
