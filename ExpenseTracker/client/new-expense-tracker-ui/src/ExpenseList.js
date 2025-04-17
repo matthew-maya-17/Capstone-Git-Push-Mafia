@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
 import AuthLink from "./AuthLink";
+import { jwtDecode } from "jwt-decode";
 
 const CATEGORY_MAP = {
   1: "Labor",
@@ -14,7 +15,19 @@ const CATEGORY_MAP = {
 function ExpenseList() {
   // STATE
   const [expenses, setExpenses] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
   const url = "http://localhost:8080/api/expense";
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log("Decoded JWT:", decoded);
+      if (decoded && decoded.authorities === "ROLE_ADMIN") {
+        setIsAdmin(true);
+      }
+    }
+  }, []);
 
   // useEffect to fetch data when components mount
   useEffect(() => {
@@ -62,8 +75,14 @@ function ExpenseList() {
   return (
     <AuthLink>
       <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="container " style={{ maxWidth: "85%" }}>
-          <table className="table table-striped table-bordered table-hover ">
+        <div className="container" style={{ maxWidth: "85%" }}>
+          <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
+            Add an Expense
+          </Link>
+          <table
+            className="table table-striped table-bordered table-hover"
+            style={{ marginTop: "4.1rem" }}
+          >
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
@@ -98,21 +117,20 @@ function ExpenseList() {
                       >
                         Update
                       </Link>
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => handleDeleteExpense(expense.expenseId)}
-                      >
-                        Delete
-                      </button>
+                      {isAdmin && (
+                        <button
+                          className="btn btn-outline-danger"
+                          onClick={() => handleDeleteExpense(expense.expenseId)}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
-            Add an Expense
-          </Link>
         </div>
       </div>
     </AuthLink>
