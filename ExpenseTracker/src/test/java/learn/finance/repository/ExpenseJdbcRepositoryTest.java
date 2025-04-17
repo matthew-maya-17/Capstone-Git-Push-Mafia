@@ -34,8 +34,14 @@ class ExpenseJdbcRepositoryTest {
     }
 
     @Test
-    void findById(){
-        Expense expense = repository.findById(1);
+    void findByUserId(){
+        List<Expense> expenses = repository.findExpensesByUserId(3);
+        assertTrue(expenses.size() > 0);
+    }
+
+    @Test
+    void findByExpenseId(){
+        Expense expense = repository.findByExpenseId(1);
         assertNotNull(expense);
     }
 

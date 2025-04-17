@@ -31,7 +31,15 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public Expense findById(int expenseId){
+    public List<Expense> findExpensesByUserId(int userId){
+            final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
+                    "FROM expense " +
+                    "WHERE user_id = ?;";
+            return jdbcTemplate.query(sql, new ExpenseMapper(), userId);
+    }
+
+    @Override
+    public Expense findByExpenseId(int expenseId){
         final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
                 "FROM expense " +
                 "WHERE expense_id = ?;";
