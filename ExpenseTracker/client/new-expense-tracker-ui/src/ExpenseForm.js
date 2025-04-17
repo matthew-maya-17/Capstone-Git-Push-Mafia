@@ -21,7 +21,11 @@ function ExpenseForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const url = "http://localhost:8080/api/expense";
-  const token = localStorage.getItem("jwtToken") != null? localStorage.getItem("jwtToken"): null;
+  const [isAdmin, setIsAdmin] = useState(false);
+  const token =
+    localStorage.getItem("jwtToken") != null
+      ? localStorage.getItem("jwtToken")
+      : null;
   const [Expense, setExpense] = useState({
     userId,
     categoryId: 5,
@@ -33,6 +37,18 @@ function ExpenseForm() {
   });
 
   const [errors, setErrors] = useState([]);
+
+  // useEffect to fetch data when components mount
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log("Decoded JWT:", decoded);
+      if (decoded && decoded.authorities === "ROLE_ADMIN") {
+        setIsAdmin(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -56,7 +72,7 @@ function ExpenseForm() {
       }));
     }
   }, [id]);
-  
+
   const handleChange = (event) => {
     const newExpense = { ...Expense };
     if (event.target.type === "checkbox") {
@@ -125,7 +141,7 @@ function ExpenseForm() {
   return (
     <AuthLink>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container  w-50 vh100 " style={{ marginTop: "90px"}}>
+        <div className="container  w-50 vh100 " style={{ marginTop: "90px" }}>
           <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
           {errors.length > 0 && (
             <div className="alert alert-danger">
@@ -184,34 +200,38 @@ function ExpenseForm() {
                 onChange={handleChange}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="approved" className="me-3">
-                Approved?
-              </label>
-              <input
-                className="form-group"
-                id="approved"
-                name="approved"
-                type="checkbox"
-                style={{ transform: "scale(1.5)" }}
-                value={Expense.approved}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="reimbursed" className="me-3">
-                Reimbursed?
-              </label>
-              <input
-                className="form-group"
-                id="reimbursed"
-                name="reimbursed"
-                type="checkbox"
-                style={{ transform: "scale(1.5)" }}
-                value={Expense.reimbursed}
-                onChange={handleChange}
-              ></input>
-            </div>
+            {isAdmin && (
+              <div className="mb-3">
+                <label htmlFor="approved" className="me-3">
+                  Approved?
+                </label>
+                <input
+                  className="form-group"
+                  id="approved"
+                  name="approved"
+                  type="checkbox"
+                  style={{ transform: "scale(1.5)" }}
+                  value={Expense.approved}
+                  onChange={handleChange}
+                ></input>
+              </div>
+            )}
+            {isAdmin && (
+              <div className="mb-3">
+                <label htmlFor="reimbursed" className="me-3">
+                  Reimbursed?
+                </label>
+                <input
+                  className="form-group"
+                  id="reimbursed"
+                  name="reimbursed"
+                  type="checkbox"
+                  style={{ transform: "scale(1.5)" }}
+                  value={Expense.reimbursed}
+                  onChange={handleChange}
+                ></input>
+              </div>
+            )}
             <div className="mb-3">
               <label htmlFor="receiptUrl">Receipt Url</label>
               <input
