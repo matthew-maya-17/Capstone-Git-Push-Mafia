@@ -132,7 +132,9 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
-  return token == null ? navigate('/login') : (
+  return token == null ? (
+    navigate("/login")
+  ) : (
     <>
       <div className="container mt-5 w-50">
         <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
@@ -196,7 +198,7 @@ function ExpenseForm() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
             <input class="form-control" id="receiptUrl" name="receiptUrl"type="text" onChange={handleChange}></input>
