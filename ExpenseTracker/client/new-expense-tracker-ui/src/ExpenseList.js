@@ -63,7 +63,7 @@ function ExpenseList() {
 
   return (
     <>
-      <div className="container" style={{  maxWidth: "85%"  }}>
+      <div className="container " style={{  maxWidth: "85%"  }}>
         <table className="table table-striped table-bordered table-hover " >
 
           <thead className="table-dark">
