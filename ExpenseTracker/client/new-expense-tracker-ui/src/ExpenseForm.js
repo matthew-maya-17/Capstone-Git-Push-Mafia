@@ -184,12 +184,35 @@ function ExpenseForm() {
             />
           </div>
           <div className="mb-3">
+            <label htmlFor="approved">Approved?</label>
+            <input
+              class="form-group"
+              id="approved"
+              name="approved"
+              type="checkbox"
+              value={Expense.approved}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="reimbursed">Reimbursed?</label>
+            <input
+              class="form-group"
+              id="reimbursed"
+              name="reimbursed"
+              type="checkbox"
+              value={Expense.reimbursed}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
             <input
               class="form-control"
               id="receiptUrl"
               name="receiptUrl"
-              type="text"
+              type="url"
+              value={Expense.receiptUrl}
               onChange={handleChange}
             ></input>
           </div>
