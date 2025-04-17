@@ -141,9 +141,8 @@ header{
 }
 
 .container {
-    max-width: 85%;
-    margin: auto;
-
+    max-width: 95%;
+    margin: auto; 
 }
 
 
