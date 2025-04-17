@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { data } from "react-router-dom"
 
-
 function Registration(){
     const [firstName, setFirstname ] = useState("")
     const [lastName, setLastname] = useState("")
@@ -13,7 +12,6 @@ function Registration(){
     const userUrl = "http://localhost:8080/api/user"
     const registerUrl = "http://localhost:8080/api/login/register";
     const token = localStorage.getItem("jwtToken")
-    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -55,8 +53,6 @@ function Registration(){
           .then((response) => {
             if(response.status === 201){
                 alert("User registered successfully!");
-                navigate("/home")
-
                 return response.json();
                 
             }else{
