@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface ExpenseRepository {
     List<Expense> findAll();
-    Expense findById(int expenseId);
+    List<Expense> findExpensesByUserId(int userId);
+    Expense findByExpenseId(int expenseId);
     List<Expense> findByDateRange(LocalDateTime startDate, LocalDateTime endDate);
     List<Expense> findByCategory(Category category);
     Expense addExpense(Expense expense);

@@ -73,7 +73,6 @@
           .catch(console.log);
       }
     };
-
     return (
       <AuthLink>
         <div className="d-flex justify-content-center align-items-center vh-100">

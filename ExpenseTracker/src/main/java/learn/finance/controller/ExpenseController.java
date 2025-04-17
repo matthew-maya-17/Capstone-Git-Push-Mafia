@@ -29,7 +29,7 @@ public class ExpenseController {
 
     @GetMapping("/{expenseId}")
     public Expense findByid(@PathVariable int expenseId){
-        return service.findById(expenseId);
+        return service.findByExpenseId(expenseId);
     }
 
     @GetMapping("/date-range")

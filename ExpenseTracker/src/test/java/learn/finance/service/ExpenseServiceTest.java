@@ -71,12 +71,24 @@ class ExpenseServiceTest {
     }
 
     @Test
+    void shouldFindExpensesByUserId(){
+        List<Expense> expected = List.of(
+                new Expense(1, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/"),
+                new Expense(2, 32, 4, 100.0, null, LocalDateTime.parse("2024-09-15T14:38:06") , null, false, false, "http://www.example.com/#actor"),
+                new Expense(2, 32, 5, 17.0, null, LocalDateTime.parse("2024-06-01T14:38:06") , null, false, false, "http://www.example.com/#actor")
+        );
+        when(repository.findExpensesByUserId(32)).thenReturn(expected);
+        List<Expense> actual = service.findExpensesByUserId(32);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldFindExpenseById() {
         // pass-through test, probably not useful
         Expense expense = new Expense(0, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/");
         Expense expected = new Expense(0, 1, 1, 100.0, null, LocalDateTime.parse("2025-07-15T14:30:00") , null, false, false, "https://www.example.org/");
-        when(repository.findById(1)).thenReturn(expected);
-        Expense actual = service.findById(1);
+        when(repository.findByExpenseId(1)).thenReturn(expected);
+        Expense actual = service.findByExpenseId(1);
         assertEquals(expected, actual);
     }
       

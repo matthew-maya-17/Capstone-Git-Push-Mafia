@@ -9,7 +9,7 @@ function Home() {
       </header>
       <div className="container">
         <section className="about">
-          <h2>Expense Tracker Sheet</h2>
+          <h2 className="text-center">Expense Tracker Sheet</h2>
         </section>
         <section>
           <ExpenseList />

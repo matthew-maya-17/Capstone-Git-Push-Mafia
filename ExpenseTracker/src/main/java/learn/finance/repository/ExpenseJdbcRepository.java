@@ -31,10 +31,18 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     }
 
     @Override
-    public Expense findById(int expenseId){
-        final String sql = "select expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
-                "from expense " +
-                "where expense_id = ?;";
+    public List<Expense> findExpensesByUserId(int userId){
+            final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
+                    "FROM expense " +
+                    "WHERE user_id = ?;";
+            return jdbcTemplate.query(sql, new ExpenseMapper(), userId);
+    }
+
+    @Override
+    public Expense findByExpenseId(int expenseId){
+        final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url " +
+                "FROM expense " +
+                "WHERE expense_id = ?;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), expenseId).stream()
                 .findFirst().orElse(null);
     }
@@ -49,7 +57,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
     @Override
         public List<Expense> findByCategory(Category category) {
         final String sql = "SELECT expense_id, user_id, category_id, amount, description, created_at, updated_at, approved, reimbursed, receipt_url FROM expense " +
-                "WHERE category_id = ? ;";
+                "WHERE category_id = ?;";
         return jdbcTemplate.query(sql, new ExpenseMapper(), category.getCategoryId());
     }
 
@@ -83,7 +91,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
 
     @Override
     public boolean updateExpense(Expense expense) {
-        final String sql = "update expense set " +
+        final String sql = "UPDATE expense SET " +
                 "user_id = ?, " +
                 "category_id = ?, " +
                 "amount = ?, " +
@@ -93,7 +101,7 @@ public class ExpenseJdbcRepository implements ExpenseRepository {
                 "approved = ?, " +
                 "reimbursed = ?, " +
                 "receipt_url = ? " +
-                "where expense_id = ?";
+                "WHERE expense_id = ?";
 
         return jdbcTemplate.update(sql,
                 expense.getUserId(),
