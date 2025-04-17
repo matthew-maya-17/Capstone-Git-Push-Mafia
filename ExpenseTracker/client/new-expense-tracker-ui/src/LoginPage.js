@@ -37,7 +37,7 @@ function LoginPage() {
       <>
         <div
           id="login-container"
-          className="d-flex justify-content-center align-items-center vh-100 bg-dark"
+          className="d-flex justify-content-center align-items-center vh-100"
         >
           <div className="card shadow p-5 w-25 mt-5">
             <h2 className="mb-4">Login</h2>

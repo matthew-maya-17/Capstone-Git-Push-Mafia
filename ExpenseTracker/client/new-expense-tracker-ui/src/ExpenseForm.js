@@ -124,121 +124,122 @@ function ExpenseForm() {
   };
   return (
     <AuthLink>
-      <div className="container mt-5 w-50">
-        <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
-        {errors.length > 0 && (
-          <div className="alert alert-danger">
-            <p>The Following Errors were Found: </p>
-            <ul>
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <form className="form-group" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="categoryId" className="form-label">
-              Select Expense Category:
-            </label>
-            <select
-              name="categoryId"
-              id="categoryId"
-              className="form-control"
-              value={Expense.categoryId}
-              onChange={handleChange}
-            >
-              <option value="1">Labor</option>
-              <option value="2">Materials</option>
-              <option value="3">Transportation</option>
-              <option value="4">Equipment Rental</option>
-              <option value="5">Misc</option>
-            </select>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="amount" className="form-label">
-              Amount
-            </label>
-            <input
-              id="amount"
-              name="amount"
-              type="number"
-              step="0.01"
-              min="0"
-              className="form-control"
-              value={Expense.amount}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
-            <input
-              id="description"
-              name="description"
-              type="text"
-              className="form-control"
-              value={Expense.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="approved" className="me-3">
-              Approved?
-            </label>
-            <input
-              className="form-group"
-              id="approved"
-              name="approved"
-              type="checkbox"
-              style={{ transform: "scale(1.5)" }}
-              value={Expense.approved}
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="reimbursed" className="me-3">
-              Reimbursed?
-            </label>
-            <input
-              className="form-group"
-              id="reimbursed"
-              name="reimbursed"
-              type="checkbox"
-              style={{ transform: "scale(1.5)" }}
-
-              value={Expense.reimbursed}
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="receiptUrl">Receipt Url</label>
-            <input
-              className="form-control"
-              id="receiptUrl"
-              name="receiptUrl"
-              type="url"
-              value={Expense.receiptUrl}
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className="mb-3">
-            <button
-              type="submit"
-              className="btn btn-outline-success me-3 mt-4 px-4 py-3 fs-4"
-            >
-              {id ? "Update Expense" : "Add Expense"}
-            </button>
-            <Link
-              type="button"
-              className="btn btn-outline-danger mt-4 px-4 py-3 fs-4"
-              to={"/expense"}
-            >
-              Cancel
-            </Link>
-          </div>
-        </form>
+      <div className="d-flex justify-content-center align-items-center vh-100 ">
+        <div className="container mt-80 w-50 vh100 ">
+          <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
+          {errors.length > 0 && (
+            <div className="alert alert-danger">
+              <p>The Following Errors were Found: </p>
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <form className="form-group" onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="categoryId" className="form-label">
+                Select Expense Category:
+              </label>
+              <select
+                name="categoryId"
+                id="categoryId"
+                className="form-control"
+                value={Expense.categoryId}
+                onChange={handleChange}
+              >
+                <option value="1">Labor</option>
+                <option value="2">Materials</option>
+                <option value="3">Transportation</option>
+                <option value="4">Equipment Rental</option>
+                <option value="5">Misc</option>
+              </select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="amount" className="form-label">
+                Amount
+              </label>
+              <input
+                id="amount"
+                name="amount"
+                type="number"
+                step="0.01"
+                min="0"
+                className="form-control"
+                value={Expense.amount}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <input
+                id="description"
+                name="description"
+                type="text"
+                className="form-control"
+                value={Expense.description}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="approved" className="me-3">
+                Approved?
+              </label>
+              <input
+                className="form-group"
+                id="approved"
+                name="approved"
+                type="checkbox"
+                style={{ transform: "scale(1.5)" }}
+                value={Expense.approved}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="reimbursed" className="me-3">
+                Reimbursed?
+              </label>
+              <input
+                className="form-group"
+                id="reimbursed"
+                name="reimbursed"
+                type="checkbox"
+                style={{ transform: "scale(1.5)" }}
+                value={Expense.reimbursed}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="receiptUrl">Receipt Url</label>
+              <input
+                className="form-control"
+                id="receiptUrl"
+                name="receiptUrl"
+                type="url"
+                value={Expense.receiptUrl}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="mb-3">
+              <button
+                type="submit"
+                className="btn btn-outline-success me-3 mt-4 px-4 py-3 fs-4"
+              >
+                {id ? "Update Expense" : "Add Expense"}
+              </button>
+              <Link
+                type="button"
+                className="btn btn-outline-danger mt-4 px-4 py-3 fs-4"
+                to={"/expense"}
+              >
+                Cancel
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </AuthLink>
   );
