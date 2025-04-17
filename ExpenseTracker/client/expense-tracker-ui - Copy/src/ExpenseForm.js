@@ -199,7 +199,7 @@ function ExpenseForm() {
           
           <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
-            <input class="form-control" id="receiptUrl" name="receiptUrl"type="text" onChange={handleChange}></input>
+            <input class="form-control" type="file" id="formFile"></input>
           </div>
           <div className="mb-3">
             <button type="submit" className="btn btn-outline-success mr-4 mt-4">
