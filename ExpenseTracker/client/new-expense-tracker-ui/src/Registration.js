@@ -61,7 +61,7 @@ function Registration() {
   };
   return (
     <div className="container mt-5 w-50">
-      <h2 className="mb-4">Register A new User</h2>
+      <h2 className="register-heading mb-4">Register A new User</h2>
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="firstName" className="form-label">
@@ -135,10 +135,16 @@ function Registration() {
           </select>
         </div>
         <div>
-          <button type="submit" className="btn btn-outline-success mr-4 mt-4">
+          <button
+            type="submit"
+            className="btn btn-outline-success me-3 mt-4 px-4 py-3 fs-4"
+          >
             Create User
           </button>
-          <Link to="/expense" className="btn btn-outline-danger mr-4 mt-4">
+          <Link
+            to="/expense"
+            className="btn btn-outline-danger me-3 mt-4 px-4 py-3 fs-4"
+          >
             Cancel
           </Link>
         </div>

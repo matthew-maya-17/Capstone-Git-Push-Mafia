@@ -21,7 +21,10 @@ function ExpenseForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const url = "http://localhost:8080/api/expense";
-  const token = localStorage.getItem("jwtToken") != null ? localStorage.getItem("jwtToken") : null;
+  const token =
+    localStorage.getItem("jwtToken") != null
+      ? localStorage.getItem("jwtToken")
+      : null;
   const [Expense, setExpense] = useState({
     userId,
     categoryId: 5,
@@ -192,7 +195,7 @@ function ExpenseForm() {
             <input
               id="description"
               name="description"
-              type="text"
+              type="url"
               className="form-control"
               value={Expense.description}
               onChange={handleChange}
@@ -201,7 +204,13 @@ function ExpenseForm() {
 
           <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
-            <input class="form-control" id="receiptUrl" name="receiptUrl"type="text" onChange={handleChange}></input>
+            <input
+              class="form-control"
+              id="receiptUrl"
+              name="receiptUrl"
+              type="text"
+              onChange={handleChange}
+            ></input>
           </div>
           <div className="mb-3">
             <button type="submit" className="btn btn-outline-success mr-4 mt-4">

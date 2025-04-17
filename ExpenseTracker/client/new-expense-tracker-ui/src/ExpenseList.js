@@ -14,7 +14,7 @@ const CATEGORY_MAP = {
 function ExpenseList() {
   // STATE
   const [expenses, setExpenses] = useState([]);
-  const token = localStorage.getItem("jwtToken")
+  const token = localStorage.getItem("jwtToken");
   const url = "http://localhost:8080/api/expense";
   const navigate = useNavigate();
 
@@ -112,7 +112,7 @@ function ExpenseList() {
             ))}
           </tbody>
         </table>
-                <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
+        <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
           Add an Expense
         </Link>
       </div>
