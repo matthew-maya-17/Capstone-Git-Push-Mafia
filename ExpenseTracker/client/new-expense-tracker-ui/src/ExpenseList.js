@@ -61,8 +61,8 @@ function ExpenseList() {
 
   return (
     <AuthLink>
-      <div className="container" style={{ maxWidth: "90%" }}>
-        <table className="table table-striped table-bordered table-hover">
+      <div className="container " style={{  maxWidth: "85%"  }}>
+        <table className="table table-striped table-bordered table-hover " >
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
@@ -90,8 +90,9 @@ function ExpenseList() {
                 <td>{expense.reimbursed ? "Yes" : "No"}</td>
                 <td>{expense.receiptUrl}</td>
                 <td>
+                <div className="d-flex">
                   <Link
-                    className="btn btn-outline-warning mr-4"
+                    className="btn btn-outline-warning me-3"
                     to={`/expense/edit/${expense.expenseId}`}
                   >
                     Update
@@ -102,6 +103,7 @@ function ExpenseList() {
                   >
                     Delete
                   </button>
+                  </div>
                 </td>
               </tr>
             ))}

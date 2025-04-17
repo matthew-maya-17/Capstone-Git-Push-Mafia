@@ -184,22 +184,55 @@ function ExpenseForm() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="receiptUrl">Receipt Url</label>
+            <label htmlFor="approved" className="me-3">
+              Approved?
+            </label>
             <input
-              class="form-control"
-              id="receiptUrl"
-              name="receiptUrl"
-              type="text"
+              className="form-group"
+              id="approved"
+              name="approved"
+              type="checkbox"
+              style={{ transform: "scale(1.5)" }}
+              value={Expense.approved}
               onChange={handleChange}
             ></input>
           </div>
           <div className="mb-3">
-            <button type="submit" className="btn btn-outline-success mr-4 mt-4">
+            <label htmlFor="reimbursed" className="me-3">
+              Reimbursed?
+            </label>
+            <input
+              className="form-group"
+              id="reimbursed"
+              name="reimbursed"
+              type="checkbox"
+              style={{ transform: "scale(1.5)" }}
+
+              value={Expense.reimbursed}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="receiptUrl">Receipt Url</label>
+            <input
+              className="form-control"
+              id="receiptUrl"
+              name="receiptUrl"
+              type="url"
+              value={Expense.receiptUrl}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-3">
+            <button
+              type="submit"
+              className="btn btn-outline-success me-3 mt-4 px-4 py-3 fs-4"
+            >
               {id ? "Update Expense" : "Add Expense"}
             </button>
             <Link
               type="button"
-              className="btn btn-outline-danger mt-4"
+              className="btn btn-outline-danger mt-4 px-4 py-3 fs-4"
               to={"/expense"}
             >
               Cancel
