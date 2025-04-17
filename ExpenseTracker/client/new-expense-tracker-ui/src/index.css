@@ -61,7 +61,7 @@ body {
   line-height: 1.5;
   font-family: 'Roboto', sans-serif;
   background-color: dark;
-  /* padding-top: 80px; */
+  padding-top: 80px;
 }
 
 html {
@@ -187,7 +187,7 @@ header{
 }
 
 .section1 {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;

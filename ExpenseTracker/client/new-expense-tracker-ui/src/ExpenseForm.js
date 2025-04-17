@@ -125,7 +125,7 @@ function ExpenseForm() {
   return (
     <AuthLink>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container mt-80 w-50 vh100 ">
+        <div className="container  w-50 vh100 " style={{ marginTop: "90px"}}>
           <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
           {errors.length > 0 && (
             <div className="alert alert-danger">
