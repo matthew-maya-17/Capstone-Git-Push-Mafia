@@ -55,7 +55,8 @@ function Registration(){
           .then((response) => {
             if(response.status === 201){
                 alert("User registered successfully!");
-                navigate('/home');
+                navigate("/home")
+
                 return response.json();
                 
             }else{
