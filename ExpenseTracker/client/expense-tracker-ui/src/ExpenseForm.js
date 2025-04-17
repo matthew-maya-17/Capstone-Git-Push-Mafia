@@ -97,7 +97,7 @@ function ExpenseForm() {
       })
       .then((data) => {
         if (data.expenseId) {
-          navigate("/");
+          navigate("/expense");
         } else {
           setErrors(data);
         }
@@ -117,7 +117,7 @@ function ExpenseForm() {
     AuthFetch(`${url}/${id}`, init)
       .then((response) => {
         if (response.status === 204) {
-          navigate("/");
+          navigate("/expense");
         } else if (response.status === 400) {
           return response.json();
         } else {
@@ -132,7 +132,9 @@ function ExpenseForm() {
       .catch(console.log);
   };
 
-  return token == null ? navigate('/login') : (
+  return token == null ? (
+    navigate("/login")
+  ) : (
     <>
       <div className="container mt-5 w-50">
         <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
@@ -196,10 +198,15 @@ function ExpenseForm() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
-            <input class="form-control" type="file" id="formFile"></input>
+            <input
+              className="form-control"
+              type="file"
+              id="formFile"
+              onChange={handleChange}
+            />
           </div>
           <div className="mb-3">
             <button type="submit" className="btn btn-outline-success mr-4 mt-4">
