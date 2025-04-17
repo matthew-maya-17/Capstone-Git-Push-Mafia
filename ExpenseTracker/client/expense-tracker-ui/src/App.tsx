@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import React from "react";
 import LoginPage from "./LoginPage";
-
-function AppContent(){
+import { JSX } from "react";
+function AppContent(): JSX.Element {
   const location = useLocation();
 
   // Define which routes should HIDE the navbar
@@ -26,7 +26,7 @@ function AppContent(){
   );
 }
 
-function App() {
+function App(): JSX.Element {
   return (
     <Router>
       <AppContent />

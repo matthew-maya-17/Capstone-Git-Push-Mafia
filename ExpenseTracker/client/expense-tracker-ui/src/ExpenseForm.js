@@ -97,7 +97,7 @@ function ExpenseForm() {
       })
       .then((data) => {
         if (data.expenseId) {
-          navigate("/");
+          navigate("/expense");
         } else {
           setErrors(data);
         }
@@ -117,7 +117,7 @@ function ExpenseForm() {
     AuthFetch(`${url}/${id}`, init)
       .then((response) => {
         if (response.status === 204) {
-          navigate("/");
+          navigate("/expense");
         } else if (response.status === 400) {
           return response.json();
         } else {
