@@ -188,7 +188,7 @@ function ExpenseForm() {
               Approved?
             </label>
             <input
-              class="form-group"
+              className="form-group"
               id="approved"
               name="approved"
               type="checkbox"
@@ -207,6 +207,7 @@ function ExpenseForm() {
               name="reimbursed"
               type="checkbox"
               style={{ transform: "scale(1.5)" }}
+
               value={Expense.reimbursed}
               onChange={handleChange}
             ></input>
@@ -214,7 +215,7 @@ function ExpenseForm() {
           <div className="mb-3">
             <label htmlFor="receiptUrl">Receipt Url</label>
             <input
-              class="form-control"
+              className="form-control"
               id="receiptUrl"
               name="receiptUrl"
               type="url"
