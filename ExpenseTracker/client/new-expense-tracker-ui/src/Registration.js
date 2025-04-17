@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { data } from "react-router-dom";
+import AuthLink from "./AuthLink";
 function Registration() {
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
@@ -60,90 +61,92 @@ function Registration() {
       });
   };
   return (
-    <div className="container mt-5 w-50">
-      <h2 className="mb-4">Register A new User</h2>
-      <form className="form-group" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
-            First name
-          </label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            className="form-control"
-            value={firstName}
-            onChange={(e) => setFirstname(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
-            Last name
-          </label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            className="form-control"
-            value={lastName}
-            onChange={(e) => setLastname(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            className="form-control"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="role" className="form-label">
-            Role
-          </label>
-          <select
-            id="role"
-            name="role"
-            className="form-control"
-            onChange={(e) => setRoleId(e.target.value === "USER" ? 1 : 2)}
-            required
-          >
-            <option value="USER">User</option>
-            <option value="ADMIN">Admin</option>
-          </select>
-        </div>
-        <div>
-          <button type="submit" className="btn btn-outline-success mr-4 mt-4">
-            Create User
-          </button>
-          <Link to="/expense" className="btn btn-outline-danger mr-4 mt-4">
-            Cancel
-          </Link>
-        </div>
-      </form>
-    </div>
+    <AuthLink>
+      <div className="container mt-5 w-50">
+        <h2 className="mb-4">Register A new User</h2>
+        <form className="form-group" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="firstName" className="form-label">
+              First name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              className="form-control"
+              value={firstName}
+              onChange={(e) => setFirstname(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="lastName" className="form-label">
+              Last name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              className="form-control"
+              value={lastName}
+              onChange={(e) => setLastname(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">
+              Username
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">
+              Role
+            </label>
+            <select
+              id="role"
+              name="role"
+              className="form-control"
+              onChange={(e) => setRoleId(e.target.value === "USER" ? 1 : 2)}
+              required
+            >
+              <option value="USER">User</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+          <div>
+            <button type="submit" className="btn btn-outline-success mr-4 mt-4">
+              Create User
+            </button>
+            <Link to="/expense" className="btn btn-outline-danger mr-4 mt-4">
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
+    </AuthLink>
   );
 }
 export default Registration;

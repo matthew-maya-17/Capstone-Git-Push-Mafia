@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
-import { fetchUser } from "react";
+import AuthLink from "./AuthLink";
 
 const CATEGORY_MAP = {
   1: "Labor",
@@ -14,9 +14,7 @@ const CATEGORY_MAP = {
 function ExpenseList() {
   // STATE
   const [expenses, setExpenses] = useState([]);
-  const token = localStorage.getItem("jwtToken")
   const url = "http://localhost:8080/api/expense";
-  const navigate = useNavigate();
 
   // useEffect to fetch data when components mount
   useEffect(() => {
@@ -62,7 +60,7 @@ function ExpenseList() {
   };
 
   return (
-    <>
+    <AuthLink>
       <div className="container" style={{ maxWidth: "90%" }}>
         <table className="table table-striped table-bordered table-hover">
           <thead className="table-dark">
@@ -109,11 +107,11 @@ function ExpenseList() {
             ))}
           </tbody>
         </table>
-                <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
+        <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
           Add an Expense
         </Link>
       </div>
-    </>
+    </AuthLink>
   );
 }
 export default ExpenseList;
