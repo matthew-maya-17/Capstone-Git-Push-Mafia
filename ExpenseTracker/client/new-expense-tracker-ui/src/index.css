@@ -75,7 +75,7 @@ h1 {
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 /*NAV STYLES*/
@@ -126,3 +126,14 @@ header{
   padding: 2rem;
 }
 
+.register-heading {
+  font-size: 4rem; 
+}
+
+.form-group {
+  font-size: 2.2rem;
+}
+
+.form-control {
+  font-size: 2.2rem;
+}
