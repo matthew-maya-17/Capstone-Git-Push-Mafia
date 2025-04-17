@@ -9,6 +9,8 @@ function Navbar() {
   };
 
   return (
+
+    
     <>
       <nav>
         <Link to={"/home"}>Home</Link>
