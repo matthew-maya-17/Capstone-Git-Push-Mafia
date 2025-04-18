@@ -88,10 +88,18 @@ public class AuthController {
             }
             login.setDisabled(false); // New users are active by default
 
+            // Create the login using the service
             Login result = service.create(login);
+
+            // Return created user with status 201 (Created)
             return new ResponseEntity<>(result, HttpStatus.CREATED);
+
+        } catch (ValidationException ex) {
+            // Return validation error message with status 400 (Bad Request)
+            return ResponseEntity.badRequest().body("Validation Error: " + ex.getMessage());
         } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            // Return general error message with status 500 (Internal Server Error)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + ex.getMessage());
         }
     }
 

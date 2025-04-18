@@ -15,7 +15,6 @@ function Navbar() {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decoded = jwtDecode(token);
-      console.log("Decoded JWT:", decoded);
       if (decoded && decoded.authorities === "ROLE_ADMIN") {
         setIsAdmin(true);
       }

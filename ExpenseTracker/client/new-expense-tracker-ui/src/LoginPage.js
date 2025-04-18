@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
   const url = "http://localhost:8080/api/login/authenticate";
@@ -21,14 +21,16 @@ function LoginPage() {
         fetch(url, init)
         .then(response => {
             if (!response.ok) {
-            throw new Error("Login failed");
+              setErrors("Invalid username or password");
             }
             return response.json();
         })
         .then(data => {
-            localStorage.setItem("jwtToken", data.jwt_token);
-            localStorage.setItem("userId", data.user_id);
-            navigate("/home");
+            if(data.user_id){
+              localStorage.setItem("jwtToken", data.jwt_token);
+              localStorage.setItem("userId", data.user_id);
+              navigate("/home");
+            }
         })
         .catch(console.log)
     }
@@ -65,6 +67,7 @@ function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                {errors === "" ? "" : <span id="error">{errors}</span>}
               </div>
 
               <button

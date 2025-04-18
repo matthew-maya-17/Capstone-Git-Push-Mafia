@@ -35,8 +35,6 @@ const lineGraph = (expenses, selectedYear) => {
 
     expenses.forEach(expense => {
         const date = new Date(expense.createdAt)
-        console.log(expense)
-        console.log(selectedYear)
         if(date.getFullYear() === selectedYear){
             const month = date.toLocaleString("default", { month: "short" });
             monthData[month] = (monthData[month] || 0) + expense.amount;

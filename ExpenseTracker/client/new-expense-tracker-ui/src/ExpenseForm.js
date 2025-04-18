@@ -91,53 +91,67 @@ function ExpenseForm() {
       addExpense(updatedExpense);
     }
   };
-  const addExpense = (updatedExpense) => {
-    const init = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedExpense),
-    };
-    AuthFetch(url, init)
-      .then((response) => {
-        if (response.status === 201 || response.status === 400) {
-          return response.json();
-        } else {
-          return Promise.reject(`Unexpected Status Code: ${response.status}`);
-        }
-      })
-      .then((data) => {
-        if (data.expenseId) {
-          navigate("/expense");
-        } else {
-          setErrors(data);
-        }
-      })
-      .catch(console.log);
+const addExpense = (updatedExpense) => {
+  const init = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedExpense),
   };
-  const updateExpense = (updatedExpense) => {
-    updatedExpense.expenseId = id;
-    const init = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedExpense),
-    };
-    AuthFetch(`${url}/${id}`, init)
-      .then((response) => {
-        if (response.status === 204) {
-          navigate("/expense");
-        } else if (response.status === 400) {
-          return response.json();
-        } else {
-          return Promise.reject(`Unexpected Status Code: ${response.status}`);
-        }
-      })
-      .then((data) => {
-        if (data) {
-          setErrors(data);
-        }
-      })
-      .catch(console.log);
+  AuthFetch(url, init)
+    .then((response) => {
+      if (
+        response.status === 201 ||
+        response.status === 400 ||
+        response.status === 500
+      ) {
+        return response.json();
+      } else {
+        return Promise.reject(`Unexpected Status Code: ${response.status}`);
+      }
+    })
+    .then((data) => {
+      if (data.expenseId) {
+        navigate("/expense");
+      } else {
+        //check if errors are array or object
+        const normalizedErrors = Array.isArray(data)
+          ? data
+          : data?.messages || ["Server side error occurred."]; // :bulb: pull from `.messages`
+        setErrors(normalizedErrors);
+      }
+    })
+    .catch(console.log);
+};
+const updateExpense = (updatedExpense) => {
+  updatedExpense.expenseId = id;
+  const init = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedExpense),
   };
+  AuthFetch(`${url}/${id}`, init)
+    .then((response) => {
+      if (response.status === 204) {
+        navigate("/expense");
+      } else if (response.status === 400 || response.status === 500) {
+        return response.json();
+      } else {
+        return Promise.reject(`Unexpected Status Code: ${response.status}`);
+      }
+    })
+    .then((data) => {
+      if (data) {
+        //check if errors are array or object
+        const normalizedErrors = Array.isArray(data)
+          ? data
+          : data?.messages || ["Server side errors occurred"]; // :bulb: pull from `.messages`
+        setErrors(normalizedErrors);
+      } else {
+        navigate("/expense");
+      }
+    })
+    .catch(console.log);
+};
   return (
     <AuthLink>
       <div className="d-flex justify-content-center align-items-center vh-100 ">
@@ -182,6 +196,7 @@ function ExpenseForm() {
                 type="number"
                 step="0.01"
                 min="0"
+                max="999999"
                 className="form-control"
                 value={Expense.amount}
                 onChange={handleChange}
