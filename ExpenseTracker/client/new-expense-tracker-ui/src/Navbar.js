@@ -1,12 +1,26 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleRemoveToken = () => {
     localStorage.removeItem("jwtToken");
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log("Decoded JWT:", decoded);
+      if (decoded && decoded.authorities === "ROLE_ADMIN") {
+        setIsAdmin(true);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -28,11 +42,15 @@ function Navbar() {
                 <a href="/expense/add">Add An Expense</a>
               </li>
               <li className="link">
-                <a href="/login" onClick={handleRemoveToken}>Logout</a>
+                <a href="/login" onClick={handleRemoveToken}>
+                  Logout
+                </a>
               </li>
-              <li className="link">
-                <a href="/register">Register</a>
-              </li>
+              {isAdmin && (
+                <li className="link">
+                  <a href="/register">Register</a>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
