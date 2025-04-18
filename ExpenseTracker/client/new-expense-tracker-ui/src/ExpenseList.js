@@ -31,31 +31,6 @@ const CATEGORY_MAP = {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decoded = jwtDecode(token);
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
       ("Decoded JWT:", decoded);
       if (decoded && decoded.authorities === "ROLE_ADMIN") {
         setIsAdmin(true);
@@ -73,7 +48,6 @@ const CATEGORY_MAP = {
         }
       })
       .then((data) => {
-        console.log(data);
         return setExpenses(data);
       })
       .catch(console.log);
@@ -100,6 +74,9 @@ const CATEGORY_MAP = {
           } else {
             return Promise.reject(`Unexpected Status Code: ${response.status}`);
           }
+        })
+        .then((data) => {
+          return setExpenses(data);
         })
         .catch(console.log);
     }
