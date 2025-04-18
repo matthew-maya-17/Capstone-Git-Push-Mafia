@@ -38,5 +38,4 @@ function pieChart(expenses) {
     ],
   };
 }
-
 export default pieChart;
