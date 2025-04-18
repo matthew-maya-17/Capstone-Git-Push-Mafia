@@ -27,7 +27,6 @@ function ExpenseList() {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decoded = jwtDecode(token);
-      console.log("Decoded JWT:", decoded);
       if (decoded && decoded.authorities === "ROLE_ADMIN") {
         setIsAdmin(true);
       }
@@ -187,8 +186,12 @@ function ExpenseList() {
                   <td>{expense.description}</td>
                   <td>{expense.createdAt}</td>
                   <td>{expense.updatedAt}</td>
-                  <td>{expense.approved ? "Yes" : "No"}</td>
-                  <td>{expense.reimbursed ? "Yes" : "No"}</td>
+                  <td>{expense.approved ? "Approved" : "Pending..."}</td>
+                  {isAdmin && (
+                    <td>
+                      {expense.reimbursed ? "Reimbursed" : "Not Reimbursed"}
+                    </td>
+                  )}
                   <td>{expense.receiptUrl}</td>
                   <td>
                     <div className="d-flex">
