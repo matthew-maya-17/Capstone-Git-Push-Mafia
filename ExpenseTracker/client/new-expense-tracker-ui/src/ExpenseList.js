@@ -54,7 +54,10 @@
         .catch(console.log);
     }, []); // call me once on page load
 
+
     const { data, options } = lineGraph(expenses, year);
+
+    
     //METHODS
     //Handle delete - only functionality needed in this component
     const handleDeleteExpense = (expenseId) => {
