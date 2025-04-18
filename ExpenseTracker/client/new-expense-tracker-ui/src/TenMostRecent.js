@@ -70,7 +70,15 @@ function TenMostRecent() {
         } else {
           // Filter only this user's expenses
           const userExpenses = data.filter((exp) => exp.userId === userId);
-          setExpenses(userExpenses.slice(0,10));
+          setExpenses(
+            userExpenses
+              .sort((a, b) => {
+                const dateA = new Date(a.createdAt.replace(" @", ""));
+                const dateB = new Date(b.createdAt.replace(" @", ""));
+                return dateB - dateA; // descending (most recent first)
+              })
+              .slice(0, 10)
+          );
         }
       })
       .catch(console.log);
