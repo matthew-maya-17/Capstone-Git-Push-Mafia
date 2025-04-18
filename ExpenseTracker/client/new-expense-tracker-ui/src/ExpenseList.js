@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthFetch } from "./AuthFetch";
-import AuthLink from "./AuthLink";
-import pieChart from "./pieChart";
-import { jwtDecode } from "jwt-decode";
-import { Pie } from "react-chartjs-2";
+  import { useEffect, useState } from "react";
+  import { Link, useNavigate } from "react-router-dom";
+  import { AuthFetch } from "./AuthFetch";
+  import AuthLink from "./AuthLink";
+  import pieChart from "./pieChart";
+  import { jwtDecode } from "jwt-decode";
+  import { Pie, Line } from "react-chartjs-2";
+  import lineGraph from "./lineGraph";
 
 const CATEGORY_MAP = {
   1: "Labor",
@@ -14,17 +15,48 @@ const CATEGORY_MAP = {
   5: "Misc",
 };
 
-function ExpenseList() {
-  // STATE
-  const [expenses, setExpenses] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const url = "http://localhost:8080/api/expense";
+  function ExpenseList() {
+    // STATE
+    const [expenses, setExpenses] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [year, setYear] = useState(new Date().getFullYear());
+    const years = [
+      ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
+    ].sort();
+
+    const url = "http://localhost:8080/api/expense";
+
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decoded = jwtDecode(token);
-      console.log("Decoded JWT:", decoded);
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      ("Decoded JWT:", decoded);
       if (decoded && decoded.authorities === "ROLE_ADMIN") {
         setIsAdmin(true);
       }
@@ -118,7 +150,33 @@ function ExpenseList() {
                   className="text-center mb-3 bg-black text-white"
                   style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
                 >
-                  <h4>Expense by Category</h4>
+                  <h4>Expense by Month in 2025</h4>
+                </div>
+                <div className="mb-3 text-center">
+                  <label htmlFor="year-select" className="form-label me-2">
+                    Select Year:
+                  </label>
+                  <select
+                    id="year-select"
+                    className="form-select d-inline-block"
+                    style={{ width: "auto" }}
+                    value={year}
+                    onChange={(e) => setYear(Number(e.target.value))}
+                  >
+                    {[
+                      ...new Set(
+                        expenses.map((exp) =>
+                          new Date(exp.createdAt).getFullYear()
+                        )
+                      ),
+                    ]
+                      .sort()
+                      .map((yr) => (
+                        <option key={yr} value={yr}>
+                          {yr}
+                        </option>
+                      ))}
+                  </select>
                 </div>
                 <div
                   style={{
@@ -129,23 +187,7 @@ function ExpenseList() {
                     width: "100%",
                   }}
                 >
-                  <Pie
-                    data={pieChart(expenses)}
-                    options={{
-                      responsive: true,
-                      plugins: {
-                        legend: {
-                          position: "right",
-                          labels: {
-                            boxWidth: 12,
-                            font: {
-                              size: 12,
-                            },
-                          },
-                        },
-                      },
-                    }}
-                  />
+                  <Line data={data} options={options} />
                 </div>
               </div>
             </div>
