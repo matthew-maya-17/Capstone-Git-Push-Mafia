@@ -1,11 +1,11 @@
-  import { useEffect, useState } from "react";
-  import { Link, useNavigate } from "react-router-dom";
-  import { AuthFetch } from "./AuthFetch";
-  import AuthLink from "./AuthLink";
-  import pieChart from "./pieChart";
-  import { jwtDecode } from "jwt-decode";
-  import { Pie, Line } from "react-chartjs-2";
-  import lineGraph from "./lineGraph";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthFetch } from "./AuthFetch";
+import AuthLink from "./AuthLink";
+import pieChart from "./pieChart";
+import { jwtDecode } from "jwt-decode";
+import { Pie, Line } from "react-chartjs-2";
+import lineGraph from "./lineGraph";
 
 const CATEGORY_MAP = {
   1: "Labor",
@@ -15,48 +15,21 @@ const CATEGORY_MAP = {
   5: "Misc",
 };
 
-  function ExpenseList() {
-    // STATE
-    const [expenses, setExpenses] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [year, setYear] = useState(new Date().getFullYear());
-    const years = [
-      ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
-    ].sort();
+function ExpenseList() {
+  // STATE
+  const [expenses, setExpenses] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const years = [
+    ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
+  ].sort();
+  const url = "http://localhost:8080/api/expense";
 
-    const url = "http://localhost:8080/api/expense";
-
-
+  // useEffect to fetch data when components mount
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decoded = jwtDecode(token);
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      ("Decoded JWT:", decoded);
       if (decoded && decoded.authorities === "ROLE_ADMIN") {
         setIsAdmin(true);
       }
@@ -78,7 +51,7 @@ const CATEGORY_MAP = {
       })
       .catch(console.log);
   }, []); // call me once on page load
-
+  const { data, options } = lineGraph(expenses, year);
   //METHODS
   //Handle delete - only functionality needed in this component
   const handleDeleteExpense = (expenseId) => {
@@ -219,8 +192,12 @@ const CATEGORY_MAP = {
                   <td>{expense.description}</td>
                   <td>{expense.createdAt}</td>
                   <td>{expense.updatedAt}</td>
-                  <td>{expense.approved ? "Approved" : "Pending"}</td>
-                  {isAdmin && <td>{expense.reimbursed ? "Yes" : "No"}</td>}
+                  <td>{expense.approved ? "Approved" : "Pending..."}</td>
+                  {isAdmin && (
+                    <td>
+                      {expense.reimbursed ? "Reimbursed" : "Not Reimbursed"}
+                    </td>
+                  )}
                   <td>{expense.receiptUrl}</td>
                   <td>
                     <div className="d-flex">
