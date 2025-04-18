@@ -22,6 +22,7 @@ function ExpenseList() {
     ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
   ].sort();
   const url = "http://localhost:8080/api/expense";
+
   // useEffect to fetch data when components mount
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -32,6 +33,7 @@ function ExpenseList() {
       }
     }
   }, []);
+
   useEffect(() => {
     AuthFetch(url)
       .then((response) => {
