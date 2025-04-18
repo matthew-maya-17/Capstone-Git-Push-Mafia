@@ -69,7 +69,7 @@ function ExpenseList() {
       })
       .catch(console.log);
   }, []);
-  
+
   const { data, options } = lineGraph(expenses, year);
 
   //METHODS
@@ -97,8 +97,6 @@ function ExpenseList() {
         .catch(console.log);
     }
   };
-
-
 
   return (
     <AuthLink>
@@ -239,7 +237,7 @@ function ExpenseList() {
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Approved?</th>
-                  <th>Reimbursed?</th>
+                  {isAdmin && <th>Reimbursed?</th>}
                   <th>Receipt URL</th>
                   <th>&nbsp;</th>
                 </tr>
