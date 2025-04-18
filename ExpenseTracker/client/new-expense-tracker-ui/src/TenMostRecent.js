@@ -98,9 +98,12 @@ function TenMostRecent() {
 
   return (
     <AuthLink>
-      <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="d-flex ">
         <div className="container " style={{ maxWidth: "90%" }}>
-          <div className="row g-5 mb-4" style={{ marginTop: "50px" }}>
+          <div
+            className="row g-5 mb-4"
+            style={{ marginTop: "50px", display: isAdmin ? "flex" : "none" }}
+          >
             <div className="col-lg-6">
               <div
                 className="text-center mb-3 bg-black text-white"
