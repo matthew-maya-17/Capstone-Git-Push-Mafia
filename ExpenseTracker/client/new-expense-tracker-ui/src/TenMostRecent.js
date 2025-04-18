@@ -15,10 +15,9 @@ const CATEGORY_MAP = {
   5: "Misc",
 };
 
-function ExpenseList() {
+function TenMostRecent() {
   // STATE
   const [expenses, setExpenses] = useState([]);
-  const [sortedExpense, setSortedExpense] = useState([])
   const [isAdmin, setIsAdmin] = useState(false);
   const [sortBy, setSortBy] = useState("date-desc");
   const [year, setYear] = useState(new Date().getFullYear());
@@ -59,33 +58,16 @@ function ExpenseList() {
       .then((data) => {
         // Only set all expenses for admin
         if (isAdminUser) {
-          setExpenses(data);
+          setExpenses(data.slice(0,10));
         } else {
           // Filter only this user's expenses
           const userExpenses = data.filter((exp) => exp.userId === userId);
-          setExpenses(userExpenses);
+          setExpenses(userExpenses.slice(0,10));
         }
       })
       .catch(console.log);
   }, []);
 
-  if (sortBy === "recent-oldest") {
-    setSortedExpense(
-      expenses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    );
-  } else if (sortBy === "oldest-recent") {
-    setSortedExpense(
-      expenses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    );
-  } else if (sortBy === "mostAmount-leastAmount") {
-    setSortedExpense(expenses.sort((a, b) => b.amount - a.amount)
-  );
-  } else if (sortBy === "leastAmount-mostAmount") {
-    setSortedExpense(
-    expenses.sort((a, b) => a.amount - b.amount)
-    );
-  }
-  
   const { data, options } = lineGraph(expenses, year);
 
   //METHODS
@@ -113,8 +95,6 @@ function ExpenseList() {
         .catch(console.log);
     }
   };
-
-
 
   return (
     <AuthLink>
@@ -265,4 +245,4 @@ function ExpenseList() {
     </AuthLink>
   );
 }
-export default ExpenseList;
+export default TenMostRecent;

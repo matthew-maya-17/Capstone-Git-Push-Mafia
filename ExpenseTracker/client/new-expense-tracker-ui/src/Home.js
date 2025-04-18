@@ -1,5 +1,6 @@
 import AuthLink from "./AuthLink";
 import ExpenseList from "./ExpenseList";
+import TenMostRecent from "./TenMostRecent";
 
 function Home() {
   return (
@@ -12,9 +13,8 @@ function Home() {
           <h2 className="text-center">Expense Tracker Sheet</h2>
         </section>
         <section>
-          <ExpenseList />
+          <TenMostRecent />
         </section>
-        <footer>COPYRIGHT 2025</footer>
       </div>
     </AuthLink>
   );
