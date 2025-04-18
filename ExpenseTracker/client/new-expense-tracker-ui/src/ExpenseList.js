@@ -21,9 +21,7 @@ function ExpenseList() {
   // STATE
   const location = useLocation();
   const [expenses, setExpenses] = useState([]);
-  const [sortedExpense, setSortedExpense] = useState([])
   const [isAdmin, setIsAdmin] = useState(false);
-  const [sortBy, setSortBy] = useState("date-desc");
   const [year, setYear] = useState(new Date().getFullYear());
   const years = [
     ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
@@ -71,23 +69,6 @@ function ExpenseList() {
       })
       .catch(console.log);
   }, []);
-
-  if (sortBy === "recent-oldest") {
-    setSortedExpense(
-      expenses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    );
-  } else if (sortBy === "oldest-recent") {
-    setSortedExpense(
-      expenses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    );
-  } else if (sortBy === "mostAmount-leastAmount") {
-    setSortedExpense(expenses.sort((a, b) => b.amount - a.amount)
-  );
-  } else if (sortBy === "leastAmount-mostAmount") {
-    setSortedExpense(
-    expenses.sort((a, b) => a.amount - b.amount)
-    );
-  }
   
   const { data, options } = lineGraph(expenses, year);
 
@@ -122,121 +103,122 @@ function ExpenseList() {
   return (
     <AuthLink>
       <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="container " style={{ maxWidth: "90%" }}>
-          {location.pathname === "/expense" && (
-            <div className="row g-5 mb-4" style={{ marginTop: "50px" }}>
-              <div className="col-lg-6">
-                <div
-                  className="text-center mb-3 bg-black text-white"
-                  style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
-                >
-                  <h4>Expense by Category</h4>
-                </div>
-                <div
-                  style={{
-                    height: "500px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Pie
-                    data={pieChart(expenses)}
-                    options={{
-                      responsive: true,
-                      plugins: {
-                        legend: {
-                          position: "right",
-                          labels: {
-                            boxWidth: 12,
-                            font: {
-                              size: 12,
-                            },
+        <div className="container mt-50px" style={{ maxWidth: "90%" }}>
+          <div
+            className="row g-5 mb-4"
+            style={{ marginTop: "50px", display: isAdmin ? "flex" : "none" }}
+          >
+            <div className="col-lg-6">
+              <div
+                className="text-center mb-3 bg-black text-white"
+                style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
+              >
+                <h4>Expense by Category</h4>
+              </div>
+              <div
+                style={{
+                  height: "500px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <Pie
+                  data={pieChart(expenses)}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "right",
+                        labels: {
+                          boxWidth: 12,
+                          font: {
+                            size: 12,
                           },
                         },
                       },
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div
-                  className="text-center mt-6 bg-black text-white"
-                  style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
-                >
-                  <h4>Expense by Month in {year}</h4>
-                </div>
-                <div className="mb-3 text-center">
-                  <label htmlFor="year-select" className="form-label me-2">
-                    Select Year:
-                  </label>
-                  <select
-                    id="year-select"
-                    className="form-select d-inline-block"
-                    style={{ width: "auto" }}
-                    value={year}
-                    onChange={(e) => setYear(Number(e.target.value))}
-                  >
-                    {[
-                      ...new Set(
-                        expenses.map((exp) =>
-                          new Date(exp.createdAt).getFullYear()
-                        )
-                      ),
-                    ]
-                      .sort()
-                      .map((yr) => (
-                        <option key={yr} value={yr}>
-                          {yr}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-                <div
-                  style={{
-                    height: "500px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
+                    },
                   }}
-                >
-                  <Line data={data} options={options} />
-                </div>
-              </div>
-              <div className="col-lg-6 offset-lg-3">
-                <div
-                  className="text-center mb-3 bg-black text-white"
-                  style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
-                >
-                  <h4>Expense by User</h4>
-                </div>
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "500px", width: "100%" }}
-                >
-                  <Pie
-                    data={pieChartByUser(expenses)}
-                    options={{
-                      responsive: true,
-                      plugins: {
-                        legend: {
-                          position: "right",
-                          labels: {
-                            boxWidth: 12,
-                            font: {
-                              size: 12,
-                            },
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </div>
+                />
               </div>
             </div>
-          )}
+            <div className="col-lg-6">
+              <div
+                className="text-center mt-6 bg-black text-white"
+                style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
+              >
+                <h4>Expense by Month in {year}</h4>
+              </div>
+              <div className="mb-3 text-center">
+                <label htmlFor="year-select" className="form-label me-2">
+                  Select Year:
+                </label>
+                <select
+                  id="year-select"
+                  className="form-select d-inline-block"
+                  style={{ width: "auto" }}
+                  value={year}
+                  onChange={(e) => setYear(Number(e.target.value))}
+                >
+                  {[
+                    ...new Set(
+                      expenses.map((exp) =>
+                        new Date(exp.createdAt).getFullYear()
+                      )
+                    ),
+                  ]
+                    .sort()
+                    .map((yr) => (
+                      <option key={yr} value={yr}>
+                        {yr}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div
+                style={{
+                  height: "500px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <Line data={data} options={options} />
+              </div>
+            </div>
+            <div className="col-lg-6 offset-lg-3">
+              <div
+                className="text-center mb-3 bg-black text-white"
+                style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
+              >
+                <h4>Expense by User</h4>
+              </div>
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "500px", width: "100%" }}
+              >
+                <Pie
+                  data={pieChartByUser(expenses)}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "right",
+                        labels: {
+                          boxWidth: 12,
+                          font: {
+                            size: 12,
+                          },
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+          </div>
           <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
             Add an Expense
           </Link>
