@@ -225,67 +225,76 @@ function ExpenseList() {
           >
             Add an Expense
           </Link>
-          <table className="table table-striped table-bordered table-hover ">
-            <thead className="table-dark">
-              <tr>
-                <th>User Id</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Description</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Approved?</th>
-                <th>Reimbursed?</th>
-                <th>Receipt URL</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((expense) => (
-                <tr key={expense.expenseId}>
-                  <td>{expense.userId}</td>
-                  <td>{CATEGORY_MAP[expense.categoryId]}</td>
-                  <td>${Number(expense.amount).toFixed(2)}</td>
-                  <td>{expense.description}</td>
-                  <td>{expense.createdAt}</td>
-                  <td>{expense.updatedAt}</td>
-                  <td>{expense.approved ? "Approved" : "Pending..."}</td>
-                  {isAdmin && (
-                    <td>
-                      {expense.reimbursed ? "Reimbursed" : "Not Reimbursed"}
-                    </td>
-                  )}
-                  <td>{expense.receiptUrl}</td>
-                  <td>
-                    <div className="d-flex">
-                      <Link
-                        className="btn btn-outline-warning me-3"
-                        to={`/expense/edit/${expense.expenseId}`}
-                      >
-                        Update
-                      </Link>
-                      {isAdmin && (
-                        <button
-                          className="btn btn-outline-danger"
-                          onClick={() => handleDeleteExpense(expense.expenseId)}
-                        >
-                          Delete
-                        </button>
-                      )}
-                    </div>
-                  </td>
+          <div
+            className="table-responsive"
+            style={{ maxHeight: "500px", overflowY: "auto" }}
+          >
+            <table className="table table-striped table-bordered table-hover mb-5">
+              <thead className="table-dark sticky-header">
+                <tr>
+                  <th>User Id</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Approved?</th>
+                  <th>Reimbursed?</th>
+                  <th>Receipt URL</th>
+                  <th>&nbsp;</th>
                 </tr>
-              ))}
-
-              {/* Fill up to 10 rows if needed */}
-              {expenses.length < 10 &&
-                Array.from({ length: 10 - expenses.length }).map((_, index) => (
-                  <tr key={`empty-${index}`}>
-                    <td colSpan={isAdmin ? 10 : 9}>&nbsp;</td>
+              </thead>
+              <tbody>
+                {expenses.map((expense) => (
+                  <tr key={expense.expenseId}>
+                    <td>{expense.userId}</td>
+                    <td>{CATEGORY_MAP[expense.categoryId]}</td>
+                    <td>${Number(expense.amount).toFixed(2)}</td>
+                    <td>{expense.description}</td>
+                    <td>{expense.createdAt}</td>
+                    <td>{expense.updatedAt}</td>
+                    <td>{expense.approved ? "Approved" : "Pending..."}</td>
+                    {isAdmin && (
+                      <td>
+                        {expense.reimbursed ? "Reimbursed" : "Not Reimbursed"}
+                      </td>
+                    )}
+                    <td>{expense.receiptUrl}</td>
+                    <td>
+                      <div className="d-flex">
+                        <Link
+                          className="btn btn-outline-warning me-3"
+                          to={`/expense/edit/${expense.expenseId}`}
+                        >
+                          Update
+                        </Link>
+                        {isAdmin && (
+                          <button
+                            className="btn btn-outline-danger"
+                            onClick={() =>
+                              handleDeleteExpense(expense.expenseId)
+                            }
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </td>
                   </tr>
                 ))}
-            </tbody>
-          </table>
+
+                {/* Fill up to 10 rows if needed */}
+                {expenses.length < 10 &&
+                  Array.from({ length: 10 - expenses.length }).map(
+                    (_, index) => (
+                      <tr key={`empty-${index}`}>
+                        <td colSpan={isAdmin ? 10 : 9}>&nbsp;</td>
+                      </tr>
+                    )
+                  )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </AuthLink>
