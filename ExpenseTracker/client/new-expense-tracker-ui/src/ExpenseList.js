@@ -79,13 +79,41 @@ const CATEGORY_MAP = {
           return setExpenses(data);
         })
         .catch(console.log);
-    }
-  };
-  return (
-    <AuthLink>
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="container " style={{ maxWidth: "90%" }}>
-          {isAdmin && (
+    }, []); // call me once on page load
+
+
+    const { data, options } = lineGraph(expenses, year);
+
+    
+    //METHODS
+    //Handle delete - only functionality needed in this component
+    const handleDeleteExpense = (expenseId) => {
+      const expense = expenses.find((ex) => ex.expenseId === expenseId);
+      if (window.confirm(`Delete Expense Id #${expense.expenseId}`)) {
+        const init = {
+          method: "DELETE",
+        };
+        AuthFetch(`${url}/${expenseId}`, init)
+          .then((response) => {
+            if (response.status === 204) {
+              //create a copy of the array
+              //remove the expense
+              const newExpenses = expenses.filter((ex) => {
+                return ex.expenseId !== expenseId;
+              });
+              //update the expense state
+              setExpenses(newExpenses);
+            } else {
+              return Promise.reject(`Unexpected Status Code: ${response.status}`);
+            }
+          })
+          .catch(console.log);
+      }
+    };
+    return (
+      <AuthLink>
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <div className="container " style={{ maxWidth: "90%" }}>
             <div className="row g-5 mb-4" style={{ marginTop: "50px" }}>
               <div className="col-lg-6">
                 <div

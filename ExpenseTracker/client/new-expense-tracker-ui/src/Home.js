@@ -19,5 +19,4 @@ function Home() {
     </AuthLink>
   );
 }
-
 export default Home;
