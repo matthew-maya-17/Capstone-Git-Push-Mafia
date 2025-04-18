@@ -219,7 +219,10 @@ function ExpenseList() {
               </div>
             </div>
           </div>
-          <Link className="btn btn-outline-success mb-4" to={"/expense/add"}>
+          <Link
+            className="btn btn-outline-success mb-4 btn-lg"
+            to={"/expense/add"}
+          >
             Add an Expense
           </Link>
           <table className="table table-striped table-bordered table-hover ">
@@ -273,6 +276,14 @@ function ExpenseList() {
                   </td>
                 </tr>
               ))}
+
+              {/* Fill up to 10 rows if needed */}
+              {expenses.length < 10 &&
+                Array.from({ length: 10 - expenses.length }).map((_, index) => (
+                  <tr key={`empty-${index}`}>
+                    <td colSpan={isAdmin ? 10 : 9}>&nbsp;</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
