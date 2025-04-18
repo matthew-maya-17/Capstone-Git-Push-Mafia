@@ -8,9 +8,8 @@ function Home() {
       <header>
         <h1>Expenses</h1>
       </header>
-      <div className="container">
+      <div className="container mt-5">
         <section className="about">
-          <h2 className="text-center">Expense Tracker Sheet</h2>
         </section>
         <section>
           <TenMostRecent />

@@ -161,6 +161,7 @@ function ExpenseForm() {
                 id="categoryId"
                 className="form-control"
                 value={expense.categoryId}
+                placeholder={"Select Expense Category:"}
                 onChange={handleChange}
               >
                 <option value="1">Labor</option>

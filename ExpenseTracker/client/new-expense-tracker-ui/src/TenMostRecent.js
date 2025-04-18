@@ -58,7 +58,15 @@ function TenMostRecent() {
       .then((data) => {
         // Only set all expenses for admin
         if (isAdminUser) {
-          setExpenses(data.slice(0,10));
+            setExpenses(
+            data
+                .sort((a, b) => {
+                const dateA = new Date(a.createdAt.replace(" @", ""));
+                const dateB = new Date(b.createdAt.replace(" @", ""));
+                return dateB - dateA; // descending (most recent first)
+                })
+                .slice(0, 10)
+            );
         } else {
           // Filter only this user's expenses
           const userExpenses = data.filter((exp) => exp.userId === userId);
@@ -185,8 +193,9 @@ function TenMostRecent() {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-between mb-4">
-            <Link className="btn btn-outline-success" to={"/expense/add"}>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h2 to={"/expense/add"}>Recent Expense</h2>
+            <Link className="btn btn-outline-success mb-4 btn-lg" to={"/expense/add"}>
               Add an Expense
             </Link>
           </div>
@@ -241,6 +250,12 @@ function TenMostRecent() {
                   </td>
                 </tr>
               ))}
+              {expenses.length < 10 &&
+                Array.from({ length: 10 - expenses.length }).map((_, index) => (
+                  <tr key={`empty-${index}`}>
+                    <td colSpan={isAdmin ? 10 : 9}>&nbsp;</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

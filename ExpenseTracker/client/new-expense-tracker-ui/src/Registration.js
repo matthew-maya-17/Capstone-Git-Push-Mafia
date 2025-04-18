@@ -94,9 +94,6 @@ const handleSubmit = (e) => {
         )}
         <form className="form-group" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="firstName" className="form-label">
-              First name
-            </label>
             <input
               id="firstName"
               name="firstName"
@@ -104,13 +101,11 @@ const handleSubmit = (e) => {
               className="form-control"
               value={firstName}
               onChange={(e) => setFirstname(e.target.value)}
+              placeholder="First Name"
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="lastName" className="form-label">
-              Last name
-            </label>
             <input
               id="lastName"
               name="lastName"
@@ -118,13 +113,11 @@ const handleSubmit = (e) => {
               className="form-control"
               value={lastName}
               onChange={(e) => setLastname(e.target.value)}
+              placeholder="Last Name"
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">
-              Username
-            </label>
             <input
               id="username"
               name="username"
@@ -132,13 +125,11 @@ const handleSubmit = (e) => {
               className="form-control"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              placeholder="Email Address"
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
             <input
               id="password"
               name="password"
@@ -146,20 +137,25 @@ const handleSubmit = (e) => {
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="role" className="form-label">
+            {/* <label htmlFor="role" className="form-label">
               Role
-            </label>
+            </label> */}
             <select
               id="role"
               name="role"
               className="form-control"
               onChange={(e) => setRoleId(e.target.value === "USER" ? 1 : 2)}
               required
+              defaultValue=""
             >
+              <option value="" disabled>
+                Select a Role
+              </option>
               <option value="USER">User</option>
               <option value="ADMIN">Admin</option>
             </select>
