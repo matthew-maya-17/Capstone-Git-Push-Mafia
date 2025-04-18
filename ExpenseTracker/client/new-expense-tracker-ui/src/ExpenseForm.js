@@ -99,9 +99,10 @@ function ExpenseForm() {
     };
     AuthFetch(url, init)
       .then((response) => {
-        if (response.status === 201 || response.status === 400) {
+        if (response.status === 201 || response.status === 400 || response.status === 500) {
           return response.json();
-        } else {
+        }
+        else {
           return Promise.reject(`Unexpected Status Code: ${response.status}`);
         }
       })
@@ -109,7 +110,11 @@ function ExpenseForm() {
         if (data.expenseId) {
           navigate("/expense");
         } else {
-          setErrors(data);
+          //check if errors are array or object
+          const normalizedErrors = Array.isArray(data)
+          ? data
+          : data?.messages || ["Server side error occurred."]; // :bulb: pull from `.messages`
+          setErrors(normalizedErrors);
         }
       })
       .catch(console.log);
@@ -125,15 +130,22 @@ function ExpenseForm() {
       .then((response) => {
         if (response.status === 204) {
           navigate("/expense");
-        } else if (response.status === 400) {
+        } else if (response.status === 400 || response.status === 500) {
           return response.json();
-        } else {
+        }
+        else {
           return Promise.reject(`Unexpected Status Code: ${response.status}`);
         }
       })
       .then((data) => {
         if (data) {
-          setErrors(data);
+          //check if errors are array or object
+          const normalizedErrors = Array.isArray(data)
+      ? data
+      : data?.messages || ["Server side errors occurred"]; // :bulb: pull from `.messages`
+      setErrors(normalizedErrors);
+        } else {
+          navigate('/expense')
         }
       })
       .catch(console.log);
