@@ -49,7 +49,6 @@
           }
         })
         .then((data) => {
-          console.log(data);
           return setExpenses(data);
         })
         .catch(console.log);
