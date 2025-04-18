@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthFetch } from "./AuthFetch";
 import AuthLink from "./AuthLink";
 import pieChart from "./pieChart";
 import { jwtDecode } from "jwt-decode";
 import { Pie, Line } from "react-chartjs-2";
 import lineGraph from "./lineGraph";
+
 const CATEGORY_MAP = {
   1: "Labor",
   2: "Materials",
@@ -13,6 +14,7 @@ const CATEGORY_MAP = {
   4: "Equipment Rental",
   5: "Misc",
 };
+
 function ExpenseList() {
   // STATE
   const [expenses, setExpenses] = useState([]);
@@ -22,6 +24,7 @@ function ExpenseList() {
     ...new Set(expenses.map((exp) => new Date(exp.createdAt).getFullYear())),
   ].sort();
   const url = "http://localhost:8080/api/expense";
+
   // useEffect to fetch data when components mount
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -32,7 +35,17 @@ function ExpenseList() {
       }
     }
   }, []);
+
   useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+
+    if (!token) return;
+
+    const decoded = jwtDecode(token);
+    const userId = decoded.userId;
+    const isAdminUser = decoded.authorities === "ROLE_ADMIN";
+    setIsAdmin(isAdminUser);
+
     AuthFetch(url)
       .then((response) => {
         if (response.status === 200) {
@@ -42,10 +55,18 @@ function ExpenseList() {
         }
       })
       .then((data) => {
-        return setExpenses(data);
+        // Only set all expenses for admin
+        if (isAdminUser) {
+          setExpenses(data);
+        } else {
+          // Filter only this user's expenses
+          const userExpenses = data.filter((exp) => exp.userId === userId);
+          setExpenses(userExpenses);
+        }
       })
       .catch(console.log);
-  }, []); // call me once on page load
+  }, []);
+
   const { data, options } = lineGraph(expenses, year);
   //METHODS
   //Handle delete - only functionality needed in this component
@@ -117,7 +138,7 @@ function ExpenseList() {
                 className="text-center mb-3 bg-black text-white"
                 style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
               >
-                <h4>Expense by Month in 2025</h4>
+                <h4>Expense by Month in {year}</h4>
               </div>
               <div className="mb-3 text-center">
                 <label htmlFor="year-select" className="form-label me-2">

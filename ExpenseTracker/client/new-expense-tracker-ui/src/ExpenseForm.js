@@ -4,29 +4,26 @@ import { AuthFetch } from "./AuthFetch";
 import { jwtDecode } from "jwt-decode";
 import AuthLink from "./AuthLink";
 
-// Function to safely decode token and get userId
 const getUserIdFromToken = () => {
   const token = localStorage.getItem("jwtToken");
   try {
     const decoded = jwtDecode(token);
-    console.log(decoded);
     return decoded?.userId || 0;
   } catch (error) {
     console.warn("Failed to decode token:", error);
     return 0;
   }
 };
+
 function ExpenseForm() {
   const userId = getUserIdFromToken();
   const navigate = useNavigate();
   const { id } = useParams();
   const url = "http://localhost:8080/api/expense";
+
   const [isAdmin, setIsAdmin] = useState(false);
-  const token =
-    localStorage.getItem("jwtToken") != null
-      ? localStorage.getItem("jwtToken")
-      : null;
-  const [Expense, setExpense] = useState({
+  const [errors, setErrors] = useState([]);
+  const [expense, setExpense] = useState({
     userId,
     categoryId: 5,
     amount: 0,
@@ -36,16 +33,16 @@ function ExpenseForm() {
     receiptUrl: "N/A",
   });
 
-  const [errors, setErrors] = useState([]);
-
-  // useEffect to fetch data when components mount
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (token) {
-      const decoded = jwtDecode(token);
-      console.log("Decoded JWT:", decoded);
-      if (decoded && decoded.authorities === "ROLE_ADMIN") {
-        setIsAdmin(true);
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded?.authorities === "ROLE_ADMIN") {
+          setIsAdmin(true);
+        }
+      } catch (e) {
+        console.warn("JWT Decode error:", e);
       }
     }
   }, []);
@@ -53,113 +50,99 @@ function ExpenseForm() {
   useEffect(() => {
     if (id) {
       AuthFetch(`${url}/${id}`)
-        .then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            return Promise.reject(`Unexpected Status Code: ${response.status}`);
-          }
-        })
-        .then((data) => {
-          setExpense(data);
-        })
-        .catch(console.log);
+        .then((response) =>
+          response.ok
+            ? response.json()
+            : Promise.reject(`Unexpected Status Code: ${response.status}`)
+        )
+        .then((data) => setExpense(data))
+        .catch(console.error);
     } else {
-      // Ensure userId persists on a fresh form
       setExpense((prev) => ({
         ...prev,
         userId,
       }));
     }
-  }, [id]);
+  }, [id, userId]);
 
   const handleChange = (event) => {
-    const newExpense = { ...Expense };
-    if (event.target.type === "checkbox") {
-      newExpense[event.target.name] = event.target.checked;
-    } else {
-      newExpense[event.target.name] = event.target.value;
-    }
-    setExpense(newExpense);
+    const { name, type, value, checked } = event.target;
+    setExpense((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const updatedExpense = { ...Expense, userId: userId };
-    if (id) {
-      updateExpense(updatedExpense);
-    } else {
-      addExpense(updatedExpense);
-    }
+    const payload = { ...expense, userId };
+    id ? updateExpense(payload) : addExpense(payload);
   };
-const addExpense = (updatedExpense) => {
-  const init = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedExpense),
+
+  const addExpense = (payload) => {
+    const init = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    };
+
+    AuthFetch(url, init)
+      .then((res) =>
+        res.status === 201 || res.status === 400 || res.status === 500
+          ? res.json()
+          : Promise.reject(`Unexpected Status Code: ${res.status}`)
+      )
+      .then((data) => {
+        if (data.expenseId) {
+          navigate("/expense");
+        } else {
+          const normalizedErrors = Array.isArray(data)
+            ? data
+            : data?.messages || ["Server side error occurred."];
+          setErrors(normalizedErrors);
+        }
+      })
+      .catch(console.error);
   };
-  AuthFetch(url, init)
-    .then((response) => {
-      if (
-        response.status === 201 ||
-        response.status === 400 ||
-        response.status === 500
-      ) {
-        return response.json();
-      } else {
-        return Promise.reject(`Unexpected Status Code: ${response.status}`);
-      }
-    })
-    .then((data) => {
-      if (data.expenseId) {
-        navigate("/expense");
-      } else {
-        //check if errors are array or object
-        const normalizedErrors = Array.isArray(data)
-          ? data
-          : data?.messages || ["Server side error occurred."]; // :bulb: pull from `.messages`
-        setErrors(normalizedErrors);
-      }
-    })
-    .catch(console.log);
-};
-const updateExpense = (updatedExpense) => {
-  updatedExpense.expenseId = id;
-  const init = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedExpense),
+
+  const updateExpense = (payload) => {
+    payload.expenseId = id;
+    const init = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    };
+
+    AuthFetch(`${url}/${id}`, init)
+      .then((res) =>
+        res.status === 204
+          ? null
+          : res.status === 400 || res.status === 500
+          ? res.json()
+          : Promise.reject(`Unexpected Status Code: ${res.status}`)
+      )
+      .then((data) => {
+        if (data) {
+          const normalizedErrors = Array.isArray(data)
+            ? data
+            : data?.messages || ["Server side errors occurred"];
+          setErrors(normalizedErrors);
+        } else {
+          navigate("/expense");
+        }
+      })
+      .catch(console.error);
   };
-  AuthFetch(`${url}/${id}`, init)
-    .then((response) => {
-      if (response.status === 204) {
-        navigate("/expense");
-      } else if (response.status === 400 || response.status === 500) {
-        return response.json();
-      } else {
-        return Promise.reject(`Unexpected Status Code: ${response.status}`);
-      }
-    })
-    .then((data) => {
-      if (data) {
-        //check if errors are array or object
-        const normalizedErrors = Array.isArray(data)
-          ? data
-          : data?.messages || ["Server side errors occurred"]; // :bulb: pull from `.messages`
-        setErrors(normalizedErrors);
-      } else {
-        navigate("/expense");
-      }
-    })
-    .catch(console.log);
-};
+
   return (
     <AuthLink>
-      <div className="d-flex justify-content-center align-items-center vh-100 ">
-        <div className="container  w-50 vh100 " style={{ marginTop: "90px" }}>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="container w-50" style={{ marginTop: "90px" }}>
           <h2 className="mb-4">{id ? "Update Expense" : "Add Expense"}</h2>
+
           {errors.length > 0 && (
             <div className="alert alert-danger">
-              <p>The Following Errors were Found: </p>
+              <p>The Following Errors were Found:</p>
               <ul>
                 {errors.map((error, index) => (
                   <li key={index}>{error}</li>
@@ -167,6 +150,7 @@ const updateExpense = (updatedExpense) => {
               </ul>
             </div>
           )}
+
           <form className="form-group" onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="categoryId" className="form-label">
@@ -176,7 +160,7 @@ const updateExpense = (updatedExpense) => {
                 name="categoryId"
                 id="categoryId"
                 className="form-control"
-                value={Expense.categoryId}
+                value={expense.categoryId}
                 onChange={handleChange}
               >
                 <option value="1">Labor</option>
@@ -186,6 +170,7 @@ const updateExpense = (updatedExpense) => {
                 <option value="5">Misc</option>
               </select>
             </div>
+
             <div className="mb-3">
               <label htmlFor="amount" className="form-label">
                 Amount
@@ -198,10 +183,11 @@ const updateExpense = (updatedExpense) => {
                 min="0"
                 max="999999"
                 className="form-control"
-                value={Expense.amount}
+                value={expense.amount}
                 onChange={handleChange}
               />
             </div>
+
             <div className="mb-3">
               <label htmlFor="description" className="form-label">
                 Description
@@ -211,53 +197,55 @@ const updateExpense = (updatedExpense) => {
                 name="description"
                 type="text"
                 className="form-control"
-                value={Expense.description}
+                value={expense.description}
                 onChange={handleChange}
               />
             </div>
+
             {isAdmin && (
-              <div className="mb-3">
-                <label htmlFor="approved" className="me-3">
-                  Approved?
-                </label>
-                <input
-                  className="form-group"
-                  id="approved"
-                  name="approved"
-                  type="checkbox"
-                  style={{ transform: "scale(1.5)" }}
-                  value={Expense.approved}
-                  onChange={handleChange}
-                ></input>
-              </div>
+              <>
+                <div className="mb-3">
+                  <label htmlFor="approved" className="me-3">
+                    Approved?
+                  </label>
+                  <input
+                    id="approved"
+                    name="approved"
+                    type="checkbox"
+                    style={{ transform: "scale(1.5)" }}
+                    checked={expense.approved}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="reimbursed" className="me-3">
+                    Reimbursed?
+                  </label>
+                  <input
+                    id="reimbursed"
+                    name="reimbursed"
+                    type="checkbox"
+                    style={{ transform: "scale(1.5)" }}
+                    checked={expense.reimbursed}
+                    onChange={handleChange}
+                  />
+                </div>
+              </>
             )}
-            {isAdmin && (
-              <div className="mb-3">
-                <label htmlFor="reimbursed" className="me-3">
-                  Reimbursed?
-                </label>
-                <input
-                  className="form-group"
-                  id="reimbursed"
-                  name="reimbursed"
-                  type="checkbox"
-                  style={{ transform: "scale(1.5)" }}
-                  value={Expense.reimbursed}
-                  onChange={handleChange}
-                ></input>
-              </div>
-            )}
+
             <div className="mb-3">
-              <label htmlFor="receiptUrl">Receipt Url</label>
+              <label htmlFor="receiptUrl">Receipt URL</label>
               <input
                 className="form-control"
                 id="receiptUrl"
                 name="receiptUrl"
                 type="url"
-                value={Expense.receiptUrl}
+                value={expense.receiptUrl}
                 onChange={handleChange}
-              ></input>
+              />
             </div>
+
             <div className="mb-3">
               <button
                 type="submit"
@@ -266,9 +254,8 @@ const updateExpense = (updatedExpense) => {
                 {id ? "Update Expense" : "Add Expense"}
               </button>
               <Link
-                type="button"
+                to="/expense"
                 className="btn btn-outline-danger mt-4 px-4 py-3 fs-4"
-                to={"/expense"}
               >
                 Cancel
               </Link>
@@ -279,4 +266,5 @@ const updateExpense = (updatedExpense) => {
     </AuthLink>
   );
 }
+
 export default ExpenseForm;
