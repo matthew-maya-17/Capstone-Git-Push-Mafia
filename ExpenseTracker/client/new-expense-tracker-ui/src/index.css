@@ -208,3 +208,10 @@ header {
     margin-right: 10px;
     
 }
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  background-color: #212529; /* same as .table-dark */
+  color: white;
+  z-index: 2;
+}
